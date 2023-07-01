@@ -19,10 +19,10 @@ class CreateSubmissionAbstrakTable extends Migration
             $table->string('judul');
             $table->text('abstrak');
             $table->text('file_abs');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->string('submited_at');
-            $table->integer('decission_by');
-            $table->string('decission_at');
+            $table->integer('decission_by')->nullable();
+            $table->string('decission_at')->nullable();
             $table->integer('id_user');
             $table->timestamps();
         });

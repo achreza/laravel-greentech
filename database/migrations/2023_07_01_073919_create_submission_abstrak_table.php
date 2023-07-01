@@ -14,7 +14,16 @@ class CreateSubmissionAbstrakTable extends Migration
     public function up()
     {
         Schema::create('submission_abstrak', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_abs_submission');
+            $table->integer('topic');
+            $table->string('judul');
+            $table->text('abstrak');
+            $table->text('file_abs');
+            $table->text('comment');
+            $table->string('submited_at');
+            $table->integer('decission_by');
+            $table->string('decission_at');
+            $table->integer('id_user');
             $table->timestamps();
         });
     }

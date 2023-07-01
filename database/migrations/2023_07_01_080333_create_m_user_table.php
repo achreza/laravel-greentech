@@ -14,7 +14,14 @@ class CreateMUserTable extends Migration
     public function up()
     {
         Schema::create('m_user', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_user');
+            $table->string('nama');
+            $table->string('email');
+            $table->string('no_telp');
+            $table->string('institusi');
+            $table->string('negara');
+            $table->string('jenis_kelamin');
+            $table->integer('id_role_user');
             $table->timestamps();
         });
     }

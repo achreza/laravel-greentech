@@ -1,0 +1,10 @@
+.content-wrapper{
+  background-color: #ffffff;
+}
+.resize-image{
+  width: 50px !important;
+  transition: ease-in-out .5s;
+}
+.image-sidebar{
+  transition: ease-in-out .5s;
+}

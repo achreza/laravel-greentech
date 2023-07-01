@@ -16,6 +16,7 @@ class CreateSystemStatusTable extends Migration
         Schema::create('system_status', function (Blueprint $table) {
             $table->id();
             $table->integer('abs_submissions');
+            $table->integer('payment');
             $table->timestamps();
         });
     }

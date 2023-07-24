@@ -46,7 +46,21 @@
                     <label class="input-group-text" for="inputGroupFile02">Submission File</label>
 
                 </div>
-                <span class="m-1 mb-1">Atau perbaharui file:</span>
+                <div class="input-group mb-3">
+
+                    <a href="/download/payment/{{ $data->file_pembayaran }}"><button type="button" class="btn btn-primary"
+                            id="inputGroupFileAddon02">
+                            {{ $data->file_pembayaran }}
+                        </button></a>
+                    <label class="input-group-text" for="inputGroupFile02">Payment File</label>
+
+
+                </div>
+                <p class="text-muted" style="font-size: 16px">*Perbarui file pembayaran pada halaman Submission Payment,
+                    pilih judul lalu upload
+                    ulang file</p>
+
+                <span class="m-1 mb-1">Perbaharui file submission:</span>
                 <div class="input-group mb-3 mt-1">
                     <div class="custom-file" @if ($data->id_status_abs == 2 || $data->id_status_abs == 3) hidden @endif>
                         <input type="file" class="custom-file-input" id="inputGroupFile02" name="file" />
@@ -55,6 +69,7 @@
                             file</label>
                     </div>
                 </div>
+
                 <h5>Upload Time : {{ $data->submitted_at }}
                 </h5>
                 <h5>Status : {{ $data->status->status }}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Submission;
+use App\Models\SystemStatus;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -171,6 +172,31 @@ class SubmissionController extends Controller
         // Return response dengan file untuk di-download
         return response()->file($filePath, $headers);
     }
+    public function paymentDownload($nama_file)
+    {
+        // Dapatkan path lengkap dari file yang akan didownload di dalam direktori storage
+        $filePath = storage_path("app/public/payment/{$nama_file}");
+
+        // Cek apakah file ada di direktori storage
+        if (!file_exists($filePath)) {
+            return redirect('/dashboard')->with('error', 'File not found.');
+        }
+
+        // Ambil nama file tanpa path
+        $originalName = pathinfo($filePath, PATHINFO_FILENAME);
+
+        // Dapatkan ekstensi file
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+        // Mendefinisikan headers untuk response
+        $headers = [
+            'Content-Type' => mime_content_type($filePath),
+            'Content-Disposition' => "attachment; filename=\"{$originalName}.{$extension}\"",
+        ];
+
+        // Return response dengan file untuk di-download
+        return response()->file($filePath, $headers);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -201,16 +227,48 @@ class SubmissionController extends Controller
         return redirect('/dashboard')->with('success', 'Decision added successfully.');
     }
 
+
     public function systemStatus(Request $request)
     {
         $request->validate([
-            'status_submission' => 'required',
+            'system-status' => 'required',
+            'payment' => 'required',
         ]);
 
-        $status = $request->input('status_submission');
+        $system = SystemStatus::first();
+        $status = $request->input('system-status');
+        $payment = $request->input('payment');
 
-        $request->session()->put('system.status_submission', $status);
+        $system->status = $status;
+        $system->payment = $payment;
+        $system->update();
 
         return redirect('/dashboard')->with('success', 'System status updated successfully.');
+    }
+
+    public function payment(Request $request)
+    {
+        $id = $request->session()->get('user.id_user');
+        $page = 'content';
+        $submission = Submission::where('id_user', $id)->get();
+        return view('user.payment', compact('page', 'submission'));
+    }
+    public function paymentAction(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file',
+        ]);
+        $id = $request->input('submission');
+
+        $file = $request->file('file');
+        $filename = $file->getClientOriginalName();
+
+        $submission = Submission::find($id);
+        $submission->file_pembayaran = $filename;
+        $submission->update();
+
+        $file->storeAs('payment', $filename, 'public');
+
+        return redirect('/dashboard')->with('success', 'Payment added successfully.');
     }
 }

@@ -18,6 +18,7 @@
         </div>
         <div class="container">
             <form action="/admin/detail/edit/{{ $submission->id_abs_submission }}" method="post">
+                @csrf
                 <div class="form-group">
                     <label for="exampleInputEmail1">Topics</label>
                     <select class="form-control" name="topic" disabled>
@@ -46,6 +47,22 @@
                         </button></a>
                     <label class="input-group-text" for="inputGroupFile02">Submission File</label>
 
+                </div>
+                <div class="input-group mb-3">
+
+                    <a href="/download/payment/{{ $submission->file_pembayaran }}"><button type="button"
+                            class="btn btn-primary" id="inputGroupFileAddon02">
+                            {{ $submission->file_pembayaran }}
+                        </button></a>
+                    <label class="input-group-text" for="inputGroupFile02">Payment File</label>
+
+                </div>
+                <div class="form-group">
+                    <label for="">Payment Confirmation</label>
+                    <select class="form-control" name="payment">
+                        <option value="1">Accept</option>
+                        <option value="2">Reject</option>
+                    </select>
                 </div>
                 <h5>Upload Time : <span>
                         {{ $submission->submitted_at }}
@@ -81,6 +98,11 @@
                         disabled>{{ $submission->comment }}</textarea>
 
                 </div>
+                @if ($submission->status_bayar == 0 || $submission->status_bayar == 2)
+                    <button type="submit" class="btn btn-primary">Confirm Payment</button>
+                @else
+                    <button type="submit" class="btn btn-success" disabled>Accepted</button>
+                @endif
             </form>
         </div>
     </div>

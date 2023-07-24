@@ -16,10 +16,9 @@ class ParticipantMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->id_role_user == PositionType::Participant) {
+        if (request()->session()->get('user.id_role_user') == 3) {
             return $next($request);
         }
-        Alert::error('Error', 'You are not allowed to access this page');
-        return redirect()->back();
+        return redirect('/illegal')->with('error', 'You are not authorized to access this page');
     }
 }

@@ -48,6 +48,7 @@ class DashboardController extends Controller
 
             $all = Submission::where('id_user', $id)
                 ->count();
+
             $page = 'content';
 
             return view('main.dashboard', compact('submissionAllData', 'accept', 'reject', 'all', 'page'));
@@ -94,6 +95,20 @@ class DashboardController extends Controller
         } else {
             return view('reviewer.detail', compact('submission', 'topics', 'status', 'reviewer', 'page'));
         }
+    }
+
+    public function paymentConfirm(Request $request, $id)
+    {
+        $submission = Submission::find($id);
+        $data =  $request->validate([
+            'payment' => 'required',
+        ]);
+
+
+        $submission->status_bayar = $data['payment'];
+        $submission->update();
+
+        return redirect('/dashboard')->with('success', 'Data updated successfully!');
     }
 
     // Reviewer

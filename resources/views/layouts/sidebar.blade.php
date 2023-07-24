@@ -55,7 +55,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/system-status"
+                                <a href="/admin/system"
                                     class="nav-link {{ $page === 'system-status' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>System Status</p>
@@ -95,6 +95,12 @@
                         <a href="/submission" class="nav-link {{ $page === 'submission' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>New Abstract Submission</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/payment" class="nav-link {{ $page === 'payment' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Submission Payment</p>
                         </a>
                     </li>
                     <li class="nav-item">

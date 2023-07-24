@@ -1,6 +1,5 @@
 @extends('layouts.layout')
 @section('content')
-
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
@@ -104,6 +103,7 @@
                                 <th>Topic</th>
                                 <th>Title</th>
                                 <th>Status</th>
+                                <th>Status Payment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -125,6 +125,17 @@
                                         </td>
                                         <td>
                                             {{ $item->status->status }}
+                                        </td>
+                                        <td>
+                                            @if ($item->file_pembayaran !== null && $item->status_bayar == 1)
+                                                <span class="badge badge-success">Paid</span>
+                                            @elseif ($item->file_pembayaran !== null && $item->status_bayar == 0)
+                                                <span class="badge badge-warning">Waiting for Confirmation</span>
+                                            @elseif ($item->file_pembayaran == 2)
+                                                <span class="badge badge-danger">Rejected</span>
+                                            @else
+                                                <span class="badge badge-secondary">Unpaid</span>
+                                            @endif
                                         </td>
                                         @if (request()->session()->get('user.id_role_user') == 1)
                                             <td>

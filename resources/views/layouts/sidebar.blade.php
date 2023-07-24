@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link disabled text-center">
-        <img class="image-sidebar" id="img-sidebar" src="/assets/img/uin.png" style="width: 200px;">
+        <img class="image-sidebar" id="img-sidebar" src="{{ asset('images/Logo_GT.png') }}" style="width: 200px;">
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -12,10 +12,10 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                @if ($role == 'admin')
+                @if (request()->session()->get('user.id_role_user') == 1)
                     <!-- Admin -->
                     <li class="nav-item">
-                        <a href="/admin/dashboard" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                        <a href="/dashboard" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Dashboard</p>
                         </a>
@@ -62,24 +62,23 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/dashboard/logout"
-                                    class="nav-link {{ $page === 'type' ? 'active' : '' }}">
+                                <a href="/logout" class="nav-link {{ $page === 'type' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Logout</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                @elseif($role == 'reviewer')
+                @elseif(request()->session()->get('user.id_role_user') == 4)
                     <!-- Reviewer -->
                     <li class="nav-item">
-                        <a href="/reviewer/dashboard" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                        <a href="/dashboard" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/reviewer/dashboard/logout" class="nav-link {{ $page === 'type' ? 'active' : '' }}">
+                        <a href="/logout" class="nav-link {{ $page === 'type' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Logout</p>
                         </a>
@@ -105,7 +104,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/dashboard/logout" class="nav-link {{ $page === 'type' ? 'active' : '' }}">
+                        <a href="/logout" class="nav-link {{ $page === 'type' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Logout</p>
                         </a>

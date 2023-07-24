@@ -1,26 +1,23 @@
-<!doctype html>
-<html>
-
-<head>
-    <title>Google SignIn</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        body {
-            padding-top: 70px;
-        }
-    </style>
-</head>
-
-<body>
+@extends('layouts.layout')
+@section('content')
     <div class="container">
-        <div class="jumbotron text-center text-primary">
-            <h1><span class="fa fa-lock"></span> Social Authentication</h1>
-            <p>Login or Register with:</p>
-            <a href="{{ route('login.google') }}" class="btn btn-danger"><span class="fa fa-google"></span> SignIn with
-                Google</a>
+        <div class="row d-flex align-items-center" style="height: 90vh; width: 100%">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <div class="card text-center" style="width: 500px; height: max-content; padding: 15px">
+                    <h3>SELAMAT DATANG</h3>
+                    <a class="btn btn-primary" href="{{ route('login.google') }}" role="button" style="width: 100%">Klik untuk
+                        login</a>
+                </div>
+            </div>
         </div>
+        <footer class="d-flex justify-content-center">
+            <p class="mb-0 text-muted">
+                ©
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                Created by <i class="mdi mdi-heart text-danger"></i> by Saintek UIN Maliki Malang
+            </p>
+        </footer>
     </div>
-</body>
-
-</html>
+@endsection

@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\AbstractStatusController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 // initial
 Route::get('/', function () {
-    return view('auth.auth');
+    return view('auth.auth', [
+        'page' => 'home',
+    ]);
 });
 
 //auth controller
@@ -24,9 +33,44 @@ Route::get('/login/google', [AuthController::class, 'redirectToGoogle'])->name('
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
 // dashboard
-Route::get('/dashboard', function () {
-    return view('main.dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'index']);
 
 //register
 Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
+
+//admin
+Route::get('/admin/abstract-status', [AbstractStatusController::class, 'index'])->name('abstract-status');
+Route::post('/admin/abstract-status/add', [AbstractStatusController::class, 'store']);
+Route::get('/admin/abstract-status/remove/{id}', [AbstractStatusController::class, 'destroy']);
+
+Route::get('/admin/topic', [TopicController::class, 'index'])->name('topic');
+Route::post('/admin/topic/add', [TopicController::class, 'store']);
+Route::get('/admin/topic/remove/{id}', [TopicController::class, 'destroy']);
+
+Route::get('/admin/user-role', [RoleController::class, 'index'])->name('user-role');
+Route::post('/admin/user-role/add', [RoleController::class, 'store']);
+Route::get('/admin/user-role/remove/{id}', [RoleController::class, 'destroy']);
+
+Route::get('/admin/user-list', [UserController::class, 'index'])->name('user-list');
+Route::post('/admin/user-list/add', [UserController::class, 'store']);
+Route::get('/admin/user-list/remove/{id}', [UserController::class, 'destroy']);
+
+Route::get('/admin/detail/{id}', [DashboardController::class, 'detail'])->name('detail-reviewer');
+Route::get('/admin/detail/download/{nama}', [DashboardController::class, 'download'])->name('download');
+
+// Reviewer
+Route::post('/reviewer/make-decision/{id}', [SubmissionController::class, 'decision'])->name('make-decision');
+Route::get('/reviewer/detail/{id} ', [DashboardController::class, 'detail'])->name('reviewer-detail');
+
+// User
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::post('/profile/update-profile', [ProfileController::class, 'update'])->name('update-profile');
+
+Route::get('/detail/{id}', [SubmissionController::class, 'detail'])->name('detail');
+Route::post('/detail/edit/{id}', [SubmissionController::class, 'update'])->name('edit-submission');
+Route::get('/detail/remove/{id}', [SubmissionController::class, 'destroy'])->name('remove-submission');
+Route::get('/download/{file_name}', [SubmissionController::class, 'download'])->name('download-file');
+
+Route::get('/submission', [SubmissionController::class, 'index'])->name('submission');
+Route::post('/submission/post_submission', [SubmissionController::class, 'store'])->name('add-submission');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PositionType;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class AuthController extends Controller
 
     public function handleGoogleCallback(Request $request)
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
 
         // Cek apakah email sudah terdaftar
         $existingUser = User::where('email', $user->email)->first();
@@ -25,11 +26,16 @@ class AuthController extends Controller
         if ($existingUser) {
             // User sudah terdaftar, langsung login dan redirect ke halaman dashboard
             auth()->login($existingUser);
-            dd($user);
+            // save session user id
+            $request->session()->put('id_user', $existingUser->id_user);
+            //save all user data to session
+            $request->session()->put('user', $existingUser);
+
             return redirect('/dashboard');
         } else {
             // User belum terdaftar, redirect ke halaman register dengan data dari Google
-            return view('auth.register', compact('email'));
+            $page = 'register';
+            return view('auth.register', compact('email', 'page'));
         }
     }
     //register
@@ -49,5 +55,10 @@ class AuthController extends Controller
 
         // Redirect ke halaman dashboard
         return redirect('/dashboard');
+    }
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        return redirect('/');
     }
 }

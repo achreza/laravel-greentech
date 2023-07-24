@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SystemStatus extends Model
+class StatusAbstract extends Model
 {
     use HasFactory;
+    protected $table = "m_status_abs";
+    protected $primaryKey = "id_status_abs";
+    protected $guarded = [];
 
-    protected $table = 'system_status';
-    protected $fillable = ['abs_submissions', 'payment'];
-    public $timestamps = true;
-
-    public function abs_submissions()
+    public function submission()
     {
         return $this->hasMany(Submission::class, 'id_abs_submission');
     }

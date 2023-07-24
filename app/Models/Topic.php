@@ -13,4 +13,9 @@ class Topic extends Model
     protected $primaryKey = 'id_topic';
     protected $fillable = ['nama_topic'];
     public $timestamps = true;
+
+    public function submission()
+    {
+        return $this->hasMany(Submission::class, 'id_abs_submission');
+    }
 }

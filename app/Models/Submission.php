@@ -11,16 +11,25 @@ class Submission extends Model
 
     protected $table = 'submission_abstrak';
     protected $primaryKey = 'id_abs_submission';
-    protected $fillable = [
-        'topic',
-        'judul',
-        'abstrak',
-        'file_abs',
-        'comment',
-        'submited_at',
-        'decission_by',
-        'decission_at',
-        'id_user',
-    ];
-    public $timestamps = true;
+    protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class, 'id_topic');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(StatusAbstract::class, 'id_status_abs');
+    }
+
+    public function decission()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

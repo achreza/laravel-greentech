@@ -6,9 +6,47 @@ use App\Enums\PositionType;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class AuthController extends Controller
 {
+
+
+    public function sendEmail()
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            // Konfigurasi SMTP
+            $mail->isSMTP();
+            $mail->Host = env('MAIL_HOST');
+            $mail->Port = env('MAIL_PORT');
+            $mail->SMTPAuth = true;
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
+            $mail->SMTPSecure = env('MAIL_ENCRYPTION');
+
+            // Pengirim
+            $mail->setFrom('greentech.notification@gmail.com', 'GreenTech Notification');
+
+            // Penerima
+            $mail->addAddress('achmadfahreza950@gmail.com', 'Achmad Fahreza');
+
+            // Isi Email
+            $mail->isHTML(true);
+            $mail->Subject = 'Subject of the Email';
+            $mail->Body = 'Body of the Email';
+
+            // Kirim Email
+            $mail->send();
+
+            return 'Email sent successfully!';
+        } catch (Exception $e) {
+            return 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+        }
+    }
+
 
     public function redirectToGoogle()
     {

@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 // initial
 Route::get('/', function () {
     return view('auth.auth', [
-        'page' => 'home',
+        'page' => 'home'
     ]);
 });
 

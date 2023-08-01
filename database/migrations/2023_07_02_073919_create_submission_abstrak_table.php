@@ -15,15 +15,18 @@ class CreateSubmissionAbstrakTable extends Migration
     {
         Schema::create('submission_abstrak', function (Blueprint $table) {
             $table->id('id_abs_submission');
-            $table->integer('topic');
+            $table->foreignId('id_topic')->references('id_topic')->on('topic');
             $table->string('judul');
             $table->text('abstrak');
             $table->text('file_abs');
             $table->text('comment')->nullable();
             $table->string('submited_at');
-            $table->integer('decission_by')->nullable();
+            $table->foreignId('id_status_abs')->references('id_status_abs')->on('m_status_abs');
+            $table->foreignId('decission_by')->references('id_user')->on('m_user');
             $table->string('decission_at')->nullable();
-            $table->integer('id_user');
+            $table->foreignId('id_user')->references('id_user')->on('m_user');
+            $table->string('file_pembayaran');
+            $table->integer('status_bayar');
             $table->timestamps();
         });
     }

@@ -32,4 +32,9 @@ class Submission extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function paper()
+    {
+        return $this->hasOne(Paper::class, 'id_paper');
+    }
 }

@@ -15,7 +15,7 @@ class CreateMStatusAbsTable extends Migration
     {
         Schema::create('m_status_abs', function (Blueprint $table) {
             $table->id('id_status_abs');
-            $table->integer('status');
+            $table->string('status');
             $table->timestamps();
         });
     }

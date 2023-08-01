@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAbstractStatusesTable extends Migration
+class CreateParticipantPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateAbstractStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('abstract_statuses', function (Blueprint $table) {
+        Schema::create('participant_payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_participant')->references('id_user')->on('m_user');
+            $table->string('file_pembayaran');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateAbstractStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('abstract_statuses');
+        Schema::dropIfExists('participant_payments');
     }
 }

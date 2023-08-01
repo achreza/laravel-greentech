@@ -83,6 +83,20 @@
                             <p>Logout</p>
                         </a>
                     </li>
+                @elseif (request()->session()->get('user.id_role_user') == 3)
+                    <!-- Reviewer -->
+                    <li class="nav-item">
+                        <a href="/dashboard-participant" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link {{ $page === 'type' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Logout</p>
+                        </a>
+                    </li>
                 @else
                     <!-- User -->
                     <li class="nav-item">
@@ -101,6 +115,12 @@
                         <a href="/payment" class="nav-link {{ $page === 'payment' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Submission Payment</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/paper" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Paper Submission</p>
                         </a>
                     </li>
                     <li class="nav-item">

@@ -20,4 +20,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Submission::class, 'id_abs_submission');
     }
+
+    public function participantPayment()
+    {
+        return $this->hasMany(ParticipantPayment::class, 'id_participant_payment');
+    }
+
+    public function paper()
+    {
+        return $this->hasMany(Paper::class, 'id_paper');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(RoleUser::class, 'id_role_user');
+    }
 }

@@ -90,6 +90,16 @@ class AuthController extends Controller
 
 
         ]);
+        $email = $request->email;
+        $existingUser = User::where('email', $email)->first();
+        // User sudah terdaftar, langsung login dan redirect ke halaman dashboard
+        auth()->login($existingUser);
+        // save session user id
+        $request->session()->put('id_user', $existingUser->id_user);
+        //save all user data to session
+        $request->session()->put('user', $existingUser);
+
+
 
         // Redirect ke halaman dashboard
         return redirect('/dashboard');

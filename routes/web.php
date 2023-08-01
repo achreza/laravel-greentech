@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbstractStatusController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaperController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubmissionController;
@@ -76,37 +77,31 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/reviewer/detail/{id} ', [DashboardController::class, 'detail'])->name('reviewer-detail');
     });
 
-    // Route::group(['middleware' => ['presenter', 'participant']], function () {
-    //     // User
-    //     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    //     Route::post('/profile/update-profile', [ProfileController::class, 'update'])->name('update-profile');
+    Route::group(['middleware' => 'presenter'], function () {
+        // User
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::post('/profile/update-profile', [ProfileController::class, 'update'])->name('update-profile');
 
-    //     Route::get('/detail/{id}', [SubmissionController::class, 'detail'])->name('detail');
-    //     Route::post('/detail/edit/{id}', [SubmissionController::class, 'update'])->name('edit-submission');
-    //     Route::get('/detail/remove/{id}', [SubmissionController::class, 'destroy'])->name('remove-submission');
-    //     Route::get('/download/{file_name}', [SubmissionController::class, 'download'])->name('download-file');
+        Route::get('/detail/{id}', [SubmissionController::class, 'detail'])->name('detail');
+        Route::post('/detail/edit/{id}', [SubmissionController::class, 'update'])->name('edit-submission');
+        Route::get('/detail/remove/{id}', [SubmissionController::class, 'destroy'])->name('remove-submission');
+        Route::get('/download/{file_name}', [SubmissionController::class, 'download'])->name('download-file');
 
-    //     Route::get('/submission', [SubmissionController::class, 'index'])->name('submission');
-    //     Route::post('/submission/post_submission', [SubmissionController::class, 'store'])->name('add-submission');
+        Route::get('/submission', [SubmissionController::class, 'index'])->name('submission');
+        Route::post('/submission/post_submission', [SubmissionController::class, 'store'])->name('add-submission');
 
-    //     Route::get('/payment', [SubmissionController::class, 'payment'])->name('payment');
-    //     Route::post('/payment/post_payment', [SubmissionController::class, 'paymentAction'])->name('add-payment');
-    //     Route::get('/download/payment/{file_name}', [SubmissionController::class, 'paymentDownload'])->name('download-payment');
-    // });
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::post('/profile/update-profile', [ProfileController::class, 'update'])->name('update-profile');
+        Route::get('/payment', [SubmissionController::class, 'payment'])->name('payment');
+        Route::post('/payment/post_payment', [SubmissionController::class, 'paymentAction'])->name('add-payment');
+        Route::get('/download/payment/{file_name}', [SubmissionController::class, 'paymentDownload'])->name('download-payment');
 
-    Route::get('/detail/{id}', [SubmissionController::class, 'detail'])->name('detail');
-    Route::post('/detail/edit/{id}', [SubmissionController::class, 'update'])->name('edit-submission');
-    Route::get('/detail/remove/{id}', [SubmissionController::class, 'destroy'])->name('remove-submission');
-    Route::get('/download/{file_name}', [SubmissionController::class, 'download'])->name('download-file');
 
-    Route::get('/submission', [SubmissionController::class, 'index'])->name('submission');
-    Route::post('/submission/post_submission', [SubmissionController::class, 'store'])->name('add-submission');
+        Route::get('/paper', [PaperController::class, 'index'])->name('paper-index');
+        Route::get('/paper/{id}', [PaperController::class, 'edit'])->name('paper-edit');
+        Route::post('/paper/post_paper', [PaperController::class, 'store'])->name('paper-store');
+    });
 
-    Route::get('/payment', [SubmissionController::class, 'payment'])->name('payment');
-    Route::post('/payment/post_payment', [SubmissionController::class, 'paymentAction'])->name('add-payment');
-    Route::get('/download/payment/{file_name}', [SubmissionController::class, 'paymentDownload'])->name('download-payment');
+    Route::group(['middleware' => 'participant'], function () {
+    });
 });
 
 Route::get('/illegal', function () {

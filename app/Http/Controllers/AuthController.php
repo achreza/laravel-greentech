@@ -104,6 +104,7 @@ class AuthController extends Controller
         // Redirect ke halaman dashboard
         return redirect('/dashboard');
     }
+
     public function logout(Request $request)
     {
         $request->session()->flush();

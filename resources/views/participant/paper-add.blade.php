@@ -36,7 +36,8 @@
             <!-- /.container-fluid -->
         </div>
         <div class="container">
-            <form id="uploadForm" enctype="multipart/form-data" action="/paper/post_paper" method="post">
+            <form id="uploadForm" enctype="multipart/form-data" action="/paper/post_paper/{{ $id_abs->id_abs_submission }}"
+                method="post">
                 @csrf
 
 
@@ -47,13 +48,13 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Authors</label>
-                    <input type="text" class="form-control" name="authors" value="author 1,author 2,author 3, ...."
+                    <input type="text" class="form-control" name="authors" placeholder="author 1,author 2,author 3, ...."
                         required />
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Authors Email</label>
                     <input type="text" class="form-control" name="authors-email"
-                        value="email author 1,email author 2,email author 3, ...." required />
+                        placeholder="email author 1,email author 2,email author 3, ...." required />
                 </div>
                 <div class="input-group mb-3">
                     <div class="custom-file">
@@ -65,16 +66,32 @@
                 </div>
                 <div id="file-upload-filename" class="mt-3 mb-3" style="display: block"><span id="status"></span></div>
 
+                <div class="form-group">
+                    <label for="">Publication</label>
+                    <select class="form-control" name="system-status">
+                        <option value="1">IOP Earth and Environmental Science</option>
+                        <option value="2">Proceedings of the International Conference on Green Technology</option>
+                        <option value="3">Jurnal Neutrino</option>
+                        <option value="4">ALCHEMY</option>
+                        <option value="4">El-Hayah</option>
+                    </select>
+                </div>
+
+
+
                 <button type="submit" class="btn btn-primary">Submit</button>
 
-                {{-- @if ($submission_status == 1)
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                @else
-                    <button type="submit" class="btn btn-danger" disabled>System Pengumpulan Sudah Ditutup</button>
-                @endif --}}
+
 
 
             </form>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="text-muted">
+                        Note : For the purpose of publication, options 3, 4, and 5, please proceed to the relevant journal.
+                    </h3>
+                </div>
+            </div>
         </div>
     </div>
 

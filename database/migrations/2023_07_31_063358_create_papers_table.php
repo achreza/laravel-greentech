@@ -18,6 +18,7 @@ class CreatePapersTable extends Migration
             $table->string('judul');
             $table->string('author');
             $table->string('author_email');
+            $table->string('publikasi');
             $table->string('file_paper');
             $table->foreignId('submitter')->references('id_user')->on('m_user');
             $table->foreignId('id_abstrak')->references('id_abs_submission')->on('submission_abstrak');

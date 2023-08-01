@@ -3,25 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                @if ($option == 1 && $negara != '62')
-                    <h3 class="font-weight-bold">Early Bird Payment</h3>
-                    <h3>$100</h3>
-                @elseif ($option == 0 && $negara != '62')
-                    <h3 class="font-weight-bold">Regular Payment</h3>
-                    <h3>$105</h3>
-                @elseif ($option == 1 && $negara == '62')
-                    <h3 class="font-weight-bold">Early Bird Payment</h3>
-                    <h3>Rp 750.000</h3>
-                @else
-                    <h3 class="font-weight-bold">Regular Payment</h3>
-                    <h3>Rp 800.000</h3>
-                @endif
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-12">
-                <form action="/presenter/payment/post/{{ $option }}" method="post">
+                <form action="/presenter/reupload/post" method="post">
                     @csrf
                     <div class="input-group mb-3">
 

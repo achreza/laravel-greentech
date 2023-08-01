@@ -22,7 +22,7 @@ class SubmissionController extends Controller
         //$submissionStatus = $request->session()->get('system.status_submission');
         $page = 'content';
 
-        return view('user.submission', compact('topics', 'page'));
+        return view('participant.submission', compact('topics', 'page'));
     }
 
     public function detail(Request $request, $id)

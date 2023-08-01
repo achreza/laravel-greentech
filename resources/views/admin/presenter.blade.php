@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
+                        <h1 class="m-0">Presenter</h1>
                     </div><!-- /.col -->
 
                 </div><!-- /.row -->
@@ -16,17 +16,16 @@
         <div class="container">
 
             <div class="row mt-4">
-                <h3 class="font-weight-bold">Your submitted Abstract</h3>
+                <h3 class="font-weight-bold">Presenter Payment</h3>
                 <div class="col-lg-12">
                     <table id="example" class="display table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>ID Article</th>
-                                <th>Topic</th>
-                                <th>Title</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Date</th>
                                 <th>Status</th>
-                                <th>Status Payment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -38,24 +37,29 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         <td>
-                                            {{ $item->id_abs_submission }}
+                                            {{ $item->id_presenter->nama }}
                                         </td>
                                         <td>
-                                            {{ $item->topic->nama_topic }}
+                                            {{ $item->jenis }}
                                         </td>
                                         <td>
-                                            {{ $item->judul }}
+                                            {{ $item->created_at }}
                                         </td>
                                         <td>
-                                            {{ $item->status->status }}
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">Paid</span>
+                                            @if ($item->status == 1)
+                                                <span class="badge badge-success">Accepted</span>
+                                            @elseif ($item->file_pembayaran == 2)
+                                                <span class="badge badge-danger">Rejected</span>
+                                            @else
+                                                <span class="badge badge-warning">Waiting for Confirmation</span>
+                                            @endif
                                         </td>
 
                                         <td>
-                                            <a class="btn btn-primary" href="/paper/{{ $item->id_abs_submission }}">Upload
-                                                Full Paper</a>
+                                            <a class="btn btn-primary"
+                                                href="/admin/presenter/{{ $item->id }}">Detail</a>
+                                        </td>
+
 
                                     </tr>
                                 @endforeach

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ParticipantPayment extends Model
+class PresenterPayment extends Model
 {
     use HasFactory;
-    protected $table = 'participant_payment';
-    protected $primaryKey = 'id_participant_payment';
+    protected $table = 'presenter_payment';
+    protected $primaryKey = 'id_presenter_payment';
     protected $guarded = [];
 
     public function user()

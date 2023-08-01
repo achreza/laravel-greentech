@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PositionType;
+use App\Models\PresenterPayment;
 use App\Models\StatusAbstract;
 use App\Models\Submission;
 use App\Models\Topic;
@@ -127,5 +128,26 @@ class DashboardController extends Controller
         $submission->save();
 
         return redirect('/reviewer/dashboard')->with('success', 'Data updated successfully!');
+    }
+
+    public function presenter()
+    {
+        $data = PresenterPayment::all();
+        $page = 'content';
+        return view('admin.presenter', compact('data', 'page'));
+    }
+    public function presenterDetail($id)
+    {
+        $data = PresenterPayment::find($id);
+        $page = 'content';
+        return view('admin.presenter-detail', compact('data', 'page'));
+    }
+    public function presenterDecision(Request $request, $id)
+    {
+        $data = PresenterPayment::find($id);
+        $data->status = $request->status;
+        $data->save();
+
+        return redirect('/dashboard')->with('success', 'Data updated successfully!');
     }
 }

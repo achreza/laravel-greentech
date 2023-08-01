@@ -9,6 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PresenterPaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/user-list/remove/{id}', [UserController::class, 'destroy']);
 
         Route::get('/admin/detail/{id}', [DashboardController::class, 'detail'])->name('detail-reviewer');
-        Route::get('/admin/detail/download/{nama}', [DashboardController::class, 'download'])->name('download');
+        Route::get('/admin/detail/download/{file_name}', [SubmissionController::class, 'download'])->name('admin-download-file');
         Route::post('/admin/detail/edit/{id}', [DashboardController::class, 'paymentConfirm'])->name('payment-confirm');
 
 
@@ -69,6 +70,11 @@ Route::middleware(['auth'])->group(function () {
             ]);
         });
         Route::post('/admin/system/update', [SubmissionController::class, 'systemStatus'])->name('update-system');
+
+        Route::get('/admin/presenter', [DashboardController::class, 'presenter'])->name('admin-presenter');
+        Route::get('/admin/presenter/{id}', [DashboardController::class, 'presenterDetail'])->name('admin-presenter-detail');
+        Route::post('/admin/presenter/decision/{id}', [DashboardController::class, 'presenterDecision'])->name('admin-presenter-decision');
+        Route::get('/admin/presenter/download/{nama}', [PresenterPaymentController::class, 'download'])->name('download-presenter');
     });
 
     Route::group(['middleware' => 'reviewer'], function () {
@@ -77,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/reviewer/detail/{id} ', [DashboardController::class, 'detail'])->name('reviewer-detail');
     });
 
-    Route::group(['middleware' => 'presenter'], function () {
+    Route::group(['middleware' => 'participant'], function () {
         // User
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('/profile/update-profile', [ProfileController::class, 'update'])->name('update-profile');
@@ -97,10 +103,21 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/paper', [PaperController::class, 'index'])->name('paper-index');
         Route::get('/paper/{id}', [PaperController::class, 'edit'])->name('paper-edit');
-        Route::post('/paper/post_paper', [PaperController::class, 'store'])->name('paper-store');
+        Route::post('/paper/post_paper/{id}', [PaperController::class, 'store'])->name('paper-store');
     });
 
-    Route::group(['middleware' => 'participant'], function () {
+    Route::group(['middleware' => 'presenter'], function () {
+        Route::get('/presenter', [PresenterPaymentController::class, 'index'])->name('presenter-index');
+        // initial
+        Route::get('/presenter/type', function () {
+            return view('presenter.option', [
+                'page' => 'content'
+            ]);
+        });
+        Route::get('/presenter/reupload/{id}', [PresenterPaymentController::class, 'reupload'])->name('presenter-reupload');
+        Route::post('/presenter/payment', [PresenterPaymentController::class, 'payment'])->name('presenter-payment');
+        Route::post('/presenter/payment/post/{option}', [PresenterPaymentController::class, 'store'])->name('presenter-payment-post');
+        Route::post('/presenter/reupload/post', [PresenterPaymentController::class, 'update'])->name('presenter-reupload-post');
     });
 });
 

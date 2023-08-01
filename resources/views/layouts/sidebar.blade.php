@@ -26,6 +26,12 @@
                             <p>Users</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/admin/presenter" class="nav-link {{ $page === 'user-list' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Presenter</p>
+                        </a>
+                    </li>
                     <li class="nav-item menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -83,12 +89,18 @@
                             <p>Logout</p>
                         </a>
                     </li>
-                @elseif (request()->session()->get('user.id_role_user') == 3)
+                @elseif (request()->session()->get('user.id_role_user') == 2)
                     <!-- Reviewer -->
                     <li class="nav-item">
-                        <a href="/dashboard-participant" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                        <a href="/presenter" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/presenter/type" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Payment</p>
                         </a>
                     </li>
                     <li class="nav-item">

@@ -19,7 +19,7 @@ class PaperController extends Controller
         //where id_user = $id_user and status = 1
         $data = Submission::where('id_user', $id_user)->where('status_bayar', 1)->get();
         $page = 'content';
-        return view('presenter.paper', compact('data', 'page'));
+        return view('participant.paper', compact('data', 'page'));
     }
 
     /**
@@ -58,9 +58,11 @@ class PaperController extends Controller
         $Paper->file_paper = $filename;
         $Paper->submitter = $submitter;
         $Paper->id_abstrak = $id;
+
         $Paper->save();
 
         $file->storeAs('paper', $filename, 'public');
+
 
         return redirect('/dashboard')->with('success', 'Paper added successfully.');
     }
@@ -82,11 +84,14 @@ class PaperController extends Controller
      * @param  \App\Models\Paper  $paper
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
+        $page = 'content';
+        $id_abs = Submission::where('id_user', session('user.id_user'))->where('status_bayar', 1)->where('id_abs_submission', $id)->first();
 
 
-        return view('presenter.paper-add');
+
+        return view('participant.paper-add', compact('page', 'id_abs'));
     }
 
     /**

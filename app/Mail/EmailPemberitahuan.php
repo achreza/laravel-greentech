@@ -10,10 +10,19 @@ use Illuminate\Queue\SerializesModels;
 class EmailPemberitahuan extends Mailable
 {
     use Queueable, SerializesModels;
+    public $data; // Menambahkan variabel data
+
+    public function __construct($data)
+    {
+        $this->data = $data; // Menginisialisasi variabel data
+    }
+
 
     public function build()
     {
-        return $this->subject('Subject Email Pemberitahuan')
-            ->view('emails.pemberitahuan');
+        return $this->from('greentech.notification@gmail.com', 'GreenTech Notification')
+            ->subject('GreenTech Notification')
+            ->view('emails.pemberitahuan')
+            ->with('data', $this->data);
     }
 }

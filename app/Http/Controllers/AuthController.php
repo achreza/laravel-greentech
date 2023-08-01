@@ -8,44 +8,14 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailPemberitahuan;
 
 class AuthController extends Controller
 {
 
 
-    public function sendEmail()
-    {
-        $mail = new PHPMailer(true);
 
-        try {
-            // Konfigurasi SMTP
-            $mail->isSMTP();
-            $mail->Host = env('MAIL_HOST');
-            $mail->Port = env('MAIL_PORT');
-            $mail->SMTPAuth = true;
-            $mail->Username = env('MAIL_USERNAME');
-            $mail->Password = env('MAIL_PASSWORD');
-            $mail->SMTPSecure = env('MAIL_ENCRYPTION');
-
-            // Pengirim
-            $mail->setFrom('greentech.notification@gmail.com', 'GreenTech Notification');
-
-            // Penerima
-            $mail->addAddress('achmadfahreza950@gmail.com', 'Achmad Fahreza');
-
-            // Isi Email
-            $mail->isHTML(true);
-            $mail->Subject = 'Subject of the Email';
-            $mail->Body = 'Body of the Email';
-
-            // Kirim Email
-            $mail->send();
-
-            return 'Email sent successfully!';
-        } catch (Exception $e) {
-            return 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
-        }
-    }
 
 
     public function redirectToGoogle()
@@ -100,7 +70,13 @@ class AuthController extends Controller
         $request->session()->put('user', $existingUser);
 
 
-
+        $email = $request->email;
+        $nama = $request->fullname;
+        $data = [
+            'subject' => "[ICGT 2023] Account Has Been Created",
+            'isi' => "Dear $nama\n Thank you for registering to 2023 13th International Conference of Green Technology (ICGT 2023).\n You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n\nRegards, Thank you and have a nice day.\n\nWarmest Regards Technical and Support Staff\n ICGT 2023",
+        ];
+        Mail::to($email)->send(new EmailPemberitahuan($data));
         // Redirect ke halaman dashboard
         return redirect('/dashboard');
     }

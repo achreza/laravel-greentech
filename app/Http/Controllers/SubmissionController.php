@@ -307,6 +307,11 @@ class SubmissionController extends Controller
         $submission->decission_at = $formattedDate;
         $submission->update();
 
+
+        $emailUser = User::find($submission->id_user)->email;
+        $nama = User::find($submission->id_user)->nama;
+        $judul = $submission->judul;
+
         if ($request->status == 2) {
 
 
@@ -332,7 +337,9 @@ Technical and Support-Staff\n
 ICGT-2023",
             ];
             Mail::to($emailUser)->send(new EmailPemberitahuan($data));
-        }
+        }
+
+
 
         return redirect('/dashboard')->with('success', 'Decision added successfully.');
     }

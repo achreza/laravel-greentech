@@ -47,11 +47,11 @@
                         aria-describedby="emailHelp" name="userCountry" />
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Topics</label>
+                    <label for="exampleInputEmail1">Gender</label>
                     <select class="form-control" name="gender">
-                        <option value="Laki-Laki" @if ($data->jenis_kelamin == 'Laki-Laki') selected @endif>Laki-Laki
+                        <option value="Laki-Laki" @if ($data->jenis_kelamin == 'Male') selected @endif>Male
                         </option>
-                        <option value="Perempuan"@if ($data->jenis_kelamin == 'Perempuan') selected @endif>Perempuan
+                        <option value="Perempuan"@if ($data->jenis_kelamin == 'Female') selected @endif>Female
                         </option>
                     </select>
                 </div>

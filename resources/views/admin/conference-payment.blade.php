@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Presenter</h1>
+                        <h1 class="m-0">Payment</h1>
                     </div><!-- /.col -->
 
                 </div><!-- /.row -->
@@ -16,16 +16,16 @@
         <div class="container">
 
             <div class="row mt-4">
-                <h3 class="font-weight-bold">Presenter Payment</h3>
+                <h3 class="font-weight-bold">Your Payment</h3>
                 <div class="col-lg-12">
                     <table id="example" class="display table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Date</th>
+                                <th>Title</th>
+                                <th>Submitter</th>
                                 <th>Status</th>
+                                <th>Payment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -37,27 +37,30 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         <td>
-                                            {{ $item->id_presenter->nama }}
+                                            {{ $item->id_user->nama }}
                                         </td>
                                         <td>
-                                            {{ $item->jenis }}
+                                            {{ $item->judul }}
                                         </td>
                                         <td>
-                                            {{ $item->created_at }}
+                                            {{ $item->status->status }}
                                         </td>
                                         <td>
-                                            @if ($item->status == 1)
-                                                <span class="badge badge-success">Accepted</span>
-                                            @elseif ($item->file_pembayaran == 2)
+                                            @if ($item->file_pembayaran !== null && $item->status_bayar == 1)
+                                                <span class="badge badge-success">Paid</span>
+                                            @elseif ($item->file_pembayaran !== null && $item->status_bayar == 0)
+                                                <span class="badge badge-warning">Waiting for Confirmation</span>
+                                            @elseif ($item->file_pembayaran !== null && $item->status_bayar == 2)
                                                 <span class="badge badge-danger">Rejected</span>
                                             @else
-                                                <span class="badge badge-warning">Waiting for Confirmation</span>
+                                                <span class="badge badge-secondary">Unpaid</span>
                                             @endif
                                         </td>
 
+
                                         <td>
                                             <a class="btn btn-primary"
-                                                href="/admin/presenter/{{ $item->id }}">Detail</a>
+                                                href="/payment/{{ $item->id_abs_submission }}">Payment</a>
                                         </td>
 
 

@@ -38,7 +38,9 @@ class AuthController extends Controller
             $request->session()->put('id_user', $existingUser->id_user);
             //save all user data to session
             $request->session()->put('user', $existingUser);
-
+            if ($existingUser->id_role_user == 3) {
+                return redirect('/dashboard-participant');
+            }
             return redirect('/dashboard');
         } else {
             // User belum terdaftar, redirect ke halaman register dengan data dari Google
@@ -70,13 +72,13 @@ class AuthController extends Controller
         $request->session()->put('user', $existingUser);
 
 
-        $email = $request->email;
-        $nama = $request->fullname;
-        $data = [
-            'subject' => "[ICGT 2023] Account Has Been Created",
-            'isi' => "Dear $nama\n Thank you for registering to 2023 13th International Conference of Green Technology (ICGT 2023).\n You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n\nRegards, Thank you and have a nice day.\n\nWarmest Regards Technical and Support Staff\n ICGT 2023",
-        ];
-        Mail::to($email)->send(new EmailPemberitahuan($data));
+        // $email = $request->email;
+        // $nama = $request->fullname;
+        // $data = [
+        //     'subject' => "[ICGT 2023] Account Has Been Created",
+        //     'isi' => "Dear $nama\n Thank you for registering to 2023 13th International Conference of Green Technology (ICGT 2023).\n You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n\nRegards, Thank you and have a nice day.\n\nWarmest Regards Technical and Support Staff\n ICGT 2023",
+        // ];
+        // Mail::to($email)->send(new EmailPemberitahuan($data));
         // Redirect ke halaman dashboard
         return redirect('/dashboard');
     }

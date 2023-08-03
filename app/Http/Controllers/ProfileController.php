@@ -20,7 +20,7 @@ class ProfileController extends Controller
         $data = User::where('email', $userEmail)->first();
         $page = 'content';
 
-        return view('participant.profile', compact('data', 'page'));
+        return view('presenter.profile', compact('data', 'page'));
     }
 
 
@@ -32,9 +32,6 @@ class ProfileController extends Controller
      */
     public function create()
     {
-
-      
-
     }
 
     /**

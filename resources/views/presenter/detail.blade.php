@@ -45,10 +45,21 @@
                     @endif
                 </span></h4>
 
-            <h4>Comment : </h4>
-            <p>{{ $submission->comment }}</p>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Comment</label>
+                <textarea class="form-control" id="w3review" name="comment" rows="6" cols="50" style="resize: none"
+                    readonly> {{ $submission->comment }}</textarea>
 
-
+            </div>
+            @if ($submission->file_pembayaran !== null && $submission->status_bayar == 1)
+                <h4>Payment Status : </h4> <span class="badge badge-success">Paid</span>
+            @elseif ($submission->file_pembayaran !== null && $submission->status_bayar == 0)
+                <h4>Payment Status : </h4><span class="badge badge-warning">Waiting for Confirmation</span>
+            @elseif ($submission->file_pembayaran !== null && $submission->status_bayar == 2)
+                <h4>Payment Status : </h4><span class="badge badge-danger">Rejected</span>
+            @else
+                <h4>Payment Status : </h4><span class="badge badge-secondary">Unpaid</span>
+            @endif
 
         </div>
     </div>

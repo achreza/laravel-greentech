@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link disabled text-center">
-        <img class="image-sidebar" id="img-sidebar" src="{{ asset('images/Logo_GT.png') }}" style="width: 200px;">
+        <img class="image-sidebar" id="img-sidebar" src="{{ asset('public/images/Logo_GT.png') }}" style="width: 200px;">
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -27,9 +27,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/presenter" class="nav-link {{ $page === 'user-list' ? 'active' : '' }}">
+                        <a href="/admin/participant" class="nav-link {{ $page === 'user-list' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Presenter</p>
+                            <p>Participant Payment</p>
                         </a>
                     </li>
                     <li class="nav-item menu-open">
@@ -84,21 +84,27 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/reviewer/peer-review" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Peer Review</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/logout" class="nav-link {{ $page === 'type' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Logout</p>
                         </a>
                     </li>
-                @elseif (request()->session()->get('user.id_role_user') == 2)
+                @elseif (request()->session()->get('user.id_role_user') == 3)
                     <!-- Reviewer -->
                     <li class="nav-item">
-                        <a href="/presenter" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                        <a href="/dashboard-participant" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/presenter/type" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
+                        <a href="/participant/type" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Payment</p>
                         </a>
@@ -133,6 +139,12 @@
                         <a href="/paper" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Paper Submission</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/peer-review" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Peer Review</p>
                         </a>
                     </li>
                     <li class="nav-item">

@@ -1,12 +1,13 @@
 @extends('layouts.layout')
 
 @section('content')
+
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Payment</h1>
+                        <h1 class="m-0">Participant</h1>
                     </div><!-- /.col -->
 
                 </div><!-- /.row -->
@@ -15,15 +16,16 @@
         <div class="container">
 
             <div class="row mt-4">
-                <h3 class="font-weight-bold">Your Payment</h3>
+                <h3 class="font-weight-bold">Participant Payment</h3>
                 <div class="col-lg-12">
                     <table id="example" class="display table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Title</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Date</th>
                                 <th>Status</th>
-                                <th>Payment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -35,33 +37,29 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         <td>
-                                            {{ $item->judul }}
+                                            {{ $item->user->nama }}
                                         </td>
                                         <td>
-                                            {{ $item->status->status }}
+                                            {{ $item->jenis }}
                                         </td>
                                         <td>
-                                            @if ($item->file_pembayaran !== null && $item->status_bayar == 1)
-                                                <span class="badge badge-success">Paid</span>
-                                            @elseif ($item->file_pembayaran !== null && $item->status_bayar == 0)
-                                                <span class="badge badge-warning">Waiting for Confirmation</span>
-                                            @elseif ($item->file_pembayaran !== null && $item->status_bayar == 2)
+                                            {{ $item->created_at }}
+                                        </td>
+                                        <td>
+                                            @if ($item->status == 1)
+                                                <span class="badge badge-success">Accepted</span>
+                                            @elseif ($item->status == 2)
                                                 <span class="badge badge-danger">Rejected</span>
                                             @else
-                                                <span class="badge badge-secondary">Unpaid</span>
+                                                <span class="badge badge-warning">Waiting for Confirmation</span>
                                             @endif
                                         </td>
-
 
                                         <td>
-                                            @if ($item->file_pembayaran == null && $item->status_bayar == null)
-                                                <a class="btn btn-primary"
-                                                    href="/payment/{{ $item->id_abs_submission }}">Payment</a>
-                                            @elseif($item->file_pembayaran != null && $item->status_bayar == 2)
-                                                <a class="btn btn-danger"
-                                                    href="/payment/reupload{{ $item->id_abs_submission }}">Reupload</a>
-                                            @endif
+                                            <a class="btn btn-primary"
+                                                href="/admin/participant/{{ $item->id_participant_payment }}">Detail</a>
                                         </td>
+
 
                                     </tr>
                                 @endforeach
@@ -95,5 +93,4 @@
             });
         }
     </script>
-
 @endsection

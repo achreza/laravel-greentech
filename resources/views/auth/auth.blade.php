@@ -2,14 +2,13 @@
 @section('content')
     <div class="bg-content" style="background-color: rgb(47, 47, 47);height:100vh">
         <div class="container">
-
+            <img src="{{asset('/public/images/Logo_GT.png')}}" style="width: 200px;">
             <div class="row d-flex align-items-center" style="height: 90vh; width: 100%">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <div class="card text-center" style="width: 500px; height: max-content; padding: 15px">
-                        <h3>SELAMAT DATANG</h3>
-                        <a class="btn btn-primary" href="{{ route('login.google') }}" role="button" style="width: 100%">Klik
-                            untuk
-                            login</a>
+                       
+                            <h3>Welcome to <br> Conference Submission System</h3>
+                            <a class="btn btn-primary" href="{{ route('login.google') }}" role="button" style="width: 100%">Login or Register</a>
                     </div>
                 </div>
             </div>
@@ -24,4 +23,6 @@
             </footer>
         </div>
     </div>
+    
+
 @endsection

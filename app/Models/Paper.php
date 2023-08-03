@@ -21,4 +21,9 @@ class Paper extends Model
     {
         return $this->belongsTo(Submission::class, 'id_abstrak');
     }
+
+    public function peerReview()
+    {
+        return $this->hasMany(PeerReview::class, 'id_paper');
+    }
 }

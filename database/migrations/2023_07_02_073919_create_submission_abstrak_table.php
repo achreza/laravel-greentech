@@ -22,11 +22,12 @@ class CreateSubmissionAbstrakTable extends Migration
             $table->text('comment')->nullable();
             $table->string('submited_at');
             $table->foreignId('id_status_abs')->references('id_status_abs')->on('m_status_abs');
-            $table->foreignId('decission_by')->references('id_user')->on('m_user');
+            $table->foreignId('decission_by')->references('id_user')->on('m_user')->nullable();
             $table->string('decission_at')->nullable();
             $table->foreignId('id_user')->references('id_user')->on('m_user');
             $table->string('file_pembayaran');
-            $table->integer('status_bayar');
+            $table->integer('status_bayar')->default(0);
+            $table->string('type_conference')->nullable();
             $table->timestamps();
         });
     }

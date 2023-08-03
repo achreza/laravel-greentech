@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paper;
+use App\Models\PeerReview;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class PaperController extends Controller
         //where id_user = $id_user and status = 1
         $data = Submission::where('id_user', $id_user)->where('status_bayar', 1)->get();
         $page = 'content';
-        return view('participant.paper', compact('data', 'page'));
+        return view('presenter.paper', compact('data', 'page'));
     }
 
     /**
@@ -55,11 +56,19 @@ class PaperController extends Controller
         $Paper->judul = $request->input('judul');
         $Paper->author = $request->input('authors');
         $Paper->author_email = $request->input('authors-email');
+        $Paper->publikasi = $request->input('publikasi');
         $Paper->file_paper = $filename;
         $Paper->submitter = $submitter;
         $Paper->id_abstrak = $id;
 
+
         $Paper->save();
+
+        $peer = new PeerReview();
+        $peer->id_paper = $Paper->id_paper;
+        $peer->file_origin = $filename;
+
+        $peer->save();
 
         $file->storeAs('paper', $filename, 'public');
 
@@ -91,7 +100,7 @@ class PaperController extends Controller
 
 
 
-        return view('participant.paper-add', compact('page', 'id_abs'));
+        return view('presenter.paper-add', compact('page', 'id_abs'));
     }
 
     /**
@@ -112,8 +121,127 @@ class PaperController extends Controller
      * @param  \App\Models\Paper  $paper
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Paper $paper)
+    public function peerReview(Request $request)
     {
-        //
+        if ($request->session()->get('user.id_role_user') == 2) {
+            $page = 'content';
+            $submitter = $request->session()->get('user.id_user');
+            $data = Paper::where('submitter', $submitter)->get();
+            return view('presenter.peer-review', compact('page', 'data'));
+        } else {
+            $page = 'content';
+            $data = Paper::all();
+            return view('reviewer.peer-review', compact('page', 'data'));
+        }
+    }
+
+    public function peerReviewDetail(Request $request, $id)
+    {
+
+        $page = 'content';
+        $data = PeerReview::where('id_paper', $id)->get();
+
+        if ($request->session()->get('user.id_role_user') == 2) {
+            return view('presenter.peer-review-detail', compact('page', 'data'));
+        } else if ($request->session()->get('user.id_role_user') == 4) {
+            return view('reviewer.peer-review-detail', compact('page', 'data'));
+        }
+    }
+    public function peerReviewEdit(Request $request, $id)
+    {
+
+        $page = 'content';
+
+        $data = PeerReview::find($id);
+
+        if ($request->session()->get('user.id_role_user') == 2) {
+            return view('presenter.peer-review-add', compact('page', 'data'));
+        } else if ($request->session()->get('user.id_role_user') == 4) {
+            //dd($data);
+            return view('reviewer.peer-review-add', compact('page', 'data'));
+        }
+    }
+    public function peerReviewAction(Request $request, $id)
+    {
+        $page = 'content';
+        $data = PeerReview::find($id);
+
+        if ($request->session()->get('user.id_role_user') == 2) {
+            $peer = new PeerReview();
+            $file = $request->file('file');
+            $filename = $this->generateFileName($file);
+            $peer->id_paper = $data->id_paper;
+            $peer->file_origin = $filename;
+            $peer->save();
+            $file->storeAs('paper-revision-presenter', $filename, 'public');
+            return redirect('/dashboard')->with('success', 'Paper added successfully.');
+        } else if ($request->session()->get('user.id_role_user') == 4) {
+            $file = $request->file('file');
+            $filename = $this->generateFileName($file);
+            $data->file_revision = $filename;
+            $data->comment = $request->input('comment');
+            $data->update();
+            $file->storeAs('paper-revision-reviewer', $filename, 'public');
+
+            return redirect('/dashboard')->with('success', 'Paper added successfully.');
+        }
+    }
+
+    private function generateFileName($file)
+    {
+        $originalname = $file->getClientOriginalName();
+        $fileExtension = preg_match('/\.+[\S]+$/', $originalname) ? preg_replace('/^.+(\..+)$/', '$1', $originalname) : '';
+        $fieldName = $file->getClientOriginalName();
+        return "{$fieldName}__" . time() . $fileExtension;
+    }
+    public function downloadPeerReviewer($nama_file)
+    {
+        // Dapatkan path lengkap dari file yang akan didownload di dalam direktori storage
+        $filePath = storage_path("app/public/paper-revision-reviewer/{$nama_file}");
+
+        // Cek apakah file ada di direktori storage
+        if (!file_exists($filePath)) {
+            return redirect('/dashboard')->with('error', 'File not found.');
+        }
+
+        // Ambil nama file tanpa path
+        $originalName = pathinfo($filePath, PATHINFO_FILENAME);
+
+        // Dapatkan ekstensi file
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+        // Mendefinisikan headers untuk response
+        $headers = [
+            'Content-Type' => mime_content_type($filePath),
+            'Content-Disposition' => "attachment; filename=\"{$originalName}.{$extension}\"",
+        ];
+
+        // Return response dengan file untuk di-download
+        return response()->file($filePath, $headers);
+    }
+    public function downloadPeerPresenter($nama_file)
+    {
+        // Dapatkan path lengkap dari file yang akan didownload di dalam direktori storage
+        $filePath = storage_path("app/public/paper-revision-presenter/{$nama_file}");
+
+        // Cek apakah file ada di direktori storage
+        if (!file_exists($filePath)) {
+            return redirect('/dashboard')->with('error', 'File not found.');
+        }
+
+        // Ambil nama file tanpa path
+        $originalName = pathinfo($filePath, PATHINFO_FILENAME);
+
+        // Dapatkan ekstensi file
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+        // Mendefinisikan headers untuk response
+        $headers = [
+            'Content-Type' => mime_content_type($filePath),
+            'Content-Disposition' => "attachment; filename=\"{$originalName}.{$extension}\"",
+        ];
+
+        // Return response dengan file untuk di-download
+        return response()->file($filePath, $headers);
     }
 }

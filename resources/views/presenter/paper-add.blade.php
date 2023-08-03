@@ -68,12 +68,12 @@
 
                 <div class="form-group">
                     <label for="">Publication</label>
-                    <select class="form-control" name="system-status">
+                    <select class="form-control" name="publikasi">
                         <option value="1">IOP Earth and Environmental Science</option>
                         <option value="2">Proceedings of the International Conference on Green Technology</option>
                         <option value="3">Jurnal Neutrino</option>
                         <option value="4">ALCHEMY</option>
-                        <option value="4">El-Hayah</option>
+                        <option value="5">El-Hayah</option>
                     </select>
                 </div>
 

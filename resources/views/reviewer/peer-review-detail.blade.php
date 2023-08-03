@@ -1,13 +1,12 @@
 @extends('layouts.layout')
 
 @section('content')
-
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Payment</h1>
+                        <h1 class="m-0">Paper Submission</h1>
                     </div><!-- /.col -->
 
                 </div><!-- /.row -->
@@ -16,14 +15,15 @@
         <div class="container">
 
             <div class="row mt-4">
-                <h3 class="font-weight-bold">Your Payment</h3>
+                <h3 class="font-weight-bold">Paper</h3>
                 <div class="col-lg-12">
                     <table id="example" class="display table table-bordered">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Type</th>
-                                <th>Date</th>
+                                <th>Revision Number</th>
+                                <th>Your Paper</th>
+                                <th>Revision from Reviewer</th>
+                                <th>Comment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -35,27 +35,40 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         <td>
-                                            {{ $item->jenis }}
+                                            <div class="input-group mb-2">
+                                                <a href="/download/paper-presenter/{{ $item->file_origin }}"><button
+                                                        type="button" class="btn btn-primary" id="inputGroupFileAddon02">
+                                                        {{ $item->file_origin }}
+                                                    </button></a>
+                                                <label class="input-group-text" for="inputGroupFile02">Payment File</label>
+                                            </div>
                                         </td>
                                         <td>
-                                            {{ $item->created_at }}
-                                        </td>
-                                        <td>
-                                            @if ($item->status == 1)
-                                                <span class="badge badge-success">Accepted</span>
-                                            @elseif ($item->status == 0)
-                                                <span class="badge badge-warning">Waiting for Confirmation</span>
-                                            @elseif ($item->file_pembayaran == 2)
-                                                <span class="badge badge-danger">Rejected</span>
+                                            @if ($item->file_revision != null)
+                                                <div class="input-group mb-2">
+                                                    <a href="/download/paper-reviewer/{{ $item->file_revision }}"><button
+                                                            type="button" class="btn btn-primary"
+                                                            id="inputGroupFileAddon02">
+                                                            {{ $item->file_revision }}
+                                                        </button></a>
+                                                    <label class="input-group-text" for="inputGroupFile02">Payment
+                                                        File</label>
+                                                </div>
                                             @else
-                                                <span class="badge badge-warning">Waiting for Confirmation</span>
+                                                <div class="">-</div>
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $item->comment }}
+
                                         </td>
 
                                         <td>
-                                            <a class="btn btn-primary" href="/presenter/reupload/{{ $item->id }}">Upload
-                                                Full Paper</a>
+                                            <a class="btn btn-primary"
+                                                href="/reviewer/peer-review/edit/{{ $item->id_peer_reviews }}">
+                                                Send Revision</a>
                                         </td>
+
 
 
                                     </tr>

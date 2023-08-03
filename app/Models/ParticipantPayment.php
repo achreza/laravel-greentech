@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PresenterPayment extends Model
+class ParticipantPayment extends Model
 {
     use HasFactory;
-    protected $table = 'presenter_payment';
-    protected $primaryKey = 'id_presenter_payment';
+    protected $table = 'participant_payments';
+    protected $primaryKey = 'id_participant_payment';
     protected $guarded = [];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_participant');
     }
 }

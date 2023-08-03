@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PositionType;
-use App\Models\PresenterPayment;
+use App\Models\ParticipantPayment;
 use App\Models\StatusAbstract;
 use App\Models\Submission;
 use App\Models\Topic;
@@ -86,27 +86,35 @@ class DashboardController extends Controller
     public function detail($id)
     {
         $submission = Submission::find($id);
-        $topics = Topic::all();
-        $status = StatusAbstract::all();
-        $reviewer = User::where('id_role_user', 4)->get();
+        if ($submission->decission_by != null) {
+            $reviewer = User::find($submission->decission_by);
+        } else {
+            $reviewer = null;
+        }
+
         $page = 'content';
 
         if (request()->session()->get('user.id_role_user') == 1) {
-            return view('admin.detail', compact('submission', 'topics', 'status', 'reviewer', 'page'));
+            return view('admin.detail-conference-payment', compact('submission', 'page', 'reviewer'));
         } else {
-            return view('reviewer.detail', compact('submission', 'topics', 'status', 'reviewer', 'page'));
+            return view('reviewer.detail', compact('submission', 'page'));
         }
     }
+
+    public function reviewerEdit($id)
+    {
+        $submission = Submission::find($id);
+        $page = 'content';
+        return view('reviewer.edit', compact('submission', 'page'));
+    }
+
+
 
     public function paymentConfirm(Request $request, $id)
     {
         $submission = Submission::find($id);
-        $data =  $request->validate([
-            'payment' => 'required',
-        ]);
 
-
-        $submission->status_bayar = $data['payment'];
+        $submission->status_bayar = $request->status;
         $submission->update();
 
         return redirect('/dashboard')->with('success', 'Data updated successfully!');
@@ -130,21 +138,21 @@ class DashboardController extends Controller
         return redirect('/reviewer/dashboard')->with('success', 'Data updated successfully!');
     }
 
-    public function presenter()
+    public function participant()
     {
-        $data = PresenterPayment::all();
+        $data = ParticipantPayment::all();
         $page = 'content';
-        return view('admin.presenter', compact('data', 'page'));
+        return view('admin.participant', compact('data', 'page'));
     }
-    public function presenterDetail($id)
+    public function participantDetail($id)
     {
-        $data = PresenterPayment::find($id);
+        $data = ParticipantPayment::find($id);
         $page = 'content';
-        return view('admin.presenter-detail', compact('data', 'page'));
+        return view('admin.participant-detail', compact('data', 'page'));
     }
-    public function presenterDecision(Request $request, $id)
+    public function participantDecision(Request $request, $id)
     {
-        $data = PresenterPayment::find($id);
+        $data = ParticipantPayment::find($id);
         $data->status = $request->status;
         $data->save();
 

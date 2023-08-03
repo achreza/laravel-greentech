@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Detail Submission</h1>
+                        <h1 class="m-0">Edit Submission</h1>
                     </div><!-- /.col -->
                     <!-- /.col -->
                 </div><!-- /.row -->
@@ -46,21 +46,9 @@
                     <label class="input-group-text" for="inputGroupFile02">Submission File</label>
 
                 </div>
-                <div class="input-group mb-3">
-
-                    <a href="/download/payment/{{ $data->file_pembayaran }}"><button type="button" class="btn btn-primary"
-                            id="inputGroupFileAddon02">
-                            {{ $data->file_pembayaran }}
-                        </button></a>
-                    <label class="input-group-text" for="inputGroupFile02">Payment File</label>
 
 
-                </div>
-                <p class="text-muted" style="font-size: 16px">*Perbarui file pembayaran pada halaman Submission Payment,
-                    pilih judul lalu upload
-                    ulang file</p>
-
-                <span class="m-1 mb-1">Perbaharui file submission:</span>
+                <span class="m-1 mb-1">Reupload Submission:</span>
                 <div class="input-group mb-3 mt-1">
                     <div class="custom-file" @if ($data->id_status_abs == 2 || $data->id_status_abs == 3) hidden @endif>
                         <input type="file" class="custom-file-input" id="inputGroupFile02" name="file" />

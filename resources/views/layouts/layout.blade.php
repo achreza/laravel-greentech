@@ -33,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- summernote -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs4.min.css" />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href={{ asset('/style/custom.css') }} />
+    <link rel="stylesheet" href={{ asset('/public/style/custom.css') }} />
     <!-- Data table -->
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
 

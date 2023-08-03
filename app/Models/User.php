@@ -21,6 +21,11 @@ class User extends Authenticatable
         return $this->hasMany(Submission::class, 'id_abs_submission');
     }
 
+    public function reviewer()
+    {
+        return $this->hasMany(Submission::class, 'decission_by');
+    }
+
     public function participantPayment()
     {
         return $this->hasMany(ParticipantPayment::class, 'id_participant_payment');

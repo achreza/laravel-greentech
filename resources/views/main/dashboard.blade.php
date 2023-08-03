@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <h3 class="font-weight-bold">Your submitted Abstract</h3>
+                <h3 class="font-weight-bold">Submitted Abstract</h3>
                 <div class="col-lg-12">
                     <table id="example" class="display table table-bordered">
                         <thead>
@@ -131,7 +131,7 @@
                                                 <span class="badge badge-success">Paid</span>
                                             @elseif ($item->file_pembayaran !== null && $item->status_bayar == 0)
                                                 <span class="badge badge-warning">Waiting for Confirmation</span>
-                                            @elseif ($item->file_pembayaran == 2)
+                                            @elseif ($item->file_pembayaran !== null && $item->status_bayar == 2)
                                                 <span class="badge badge-danger">Rejected</span>
                                             @else
                                                 <span class="badge badge-secondary">Unpaid</span>
@@ -148,6 +148,9 @@
                                             </td>
                                         @elseif(request()->session()->get('user.id_role_user') == 4)
                                             <td>
+                                                <a class="btn btn-warning"
+                                                    href="/reviewer/edit/{{ $item->id_abs_submission }}">Edit</a>
+                                                <span> | </span>
                                                 <a class="btn btn-primary"
                                                     href="/reviewer/detail/{{ $item->id_abs_submission }}">Detail</a>
 
@@ -155,6 +158,9 @@
                                             </td>
                                         @else
                                             <td>
+                                                <a class="btn btn-warning"
+                                                    href="/edit/{{ $item->id_abs_submission }}">Edit</a>
+                                                <span> | </span>
                                                 <a class="btn btn-primary"
                                                     href="/detail/{{ $item->id_abs_submission }}">Detail</a>
                                                 <span> | </span>

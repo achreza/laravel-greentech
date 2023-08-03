@@ -21,6 +21,7 @@ class CreateMUserTable extends Migration
             $table->string('institusi');
             $table->string('negara');
             $table->string('jenis_kelamin');
+            $table->string('student_card')->nullable();
             $table->foreignId('id_role_user')->references('id_role_user')->on('role_user');
             $table->timestamps();
         });

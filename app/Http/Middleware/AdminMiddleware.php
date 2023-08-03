@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (request()->session()->get('user.id_role_user') == 4) {
+        if (request()->session()->get('user.id_role_user') == 1) {
             return $next($request);
         }
 

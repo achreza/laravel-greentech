@@ -13,28 +13,12 @@
             </div><!-- /.container-fluid -->
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    @if ($option == 'early' && $negara != 'Indonesia')
-                        <h3 class="font-weight-bold">Early Bird Payment</h3>
-                        <h3>$100</h3>
-                    @elseif ($option == 'regular' && $negara != 'Indonesia')
-                        <h3 class="font-weight-bold">Regular Payment</h3>
-                        <h3>$105</h3>
-                    @elseif ($option == 'early' && $negara == 'Indonesia')
-                        <h3 class="font-weight-bold">Early Bird Payment</h3>
-                        <h3>Rp 750.000</h3>
-                    @else
-                        <h3 class="font-weight-bold">Regular Payment</h3>
-                        <h3>Rp 800.000</h3>
-                    @endif
-                </div>
-            </div>
+
             <div class="row">
                 <div class="col-md-12">
-                    <form enctype="multipart/form-data" action="/participant/payment/post/{{ $option }}"
-                        method="post">
+                    <form enctype="multipart/form-data" action="/presenter/reupload/post/{{ $id }}"method="post">
                         @csrf
+                        <h3>Reupload payment file</h3>
                         <div class="input-group mb-3">
 
                             <div class="custom-file">

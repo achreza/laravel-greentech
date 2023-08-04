@@ -90,21 +90,21 @@ class SubmissionController extends Controller
         $submission->update();
 
         $file->storeAs('submission-abstract', $filename, 'public');
-        // $nama = $request->session()->get('user.nama');
-        // $judul =  $submission->judul;
-        // $data = [
-        //     'subject' => "[ICGT 2023] Abstract $judul Has Been Submitted",
-        //     'isi' => "Dear $nama\n Thank you for registering your paper Entitled '$judul' to 2023 13th International Conference of Green Technology (ICGT 2023).\n You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n\nRegards, Thank you and have a nice day.\n\nWarmest Regards Technical and Support Staff\n ICGT 2023",
-        // ];
+        $nama = $request->session()->get('user.nama');
+        $judul =  $submission->judul;
+        $data = [
+            'subject' => "[ICGT 2023] Abstract $judul Has Been Submitted",
+            'isi' => "Dear $nama\n Thank you for registering your paper Entitled '$judul' to 2023 13th International Conference of Green Technology (ICGT 2023).\n You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n\nRegards, Thank you and have a nice day.\n\nWarmest Regards Technical and Support Staff\n ICGT 2023",
+        ];
 
-        // try {
-        //     $email = $request->session()->get('user.email');
-        //     Mail::to($email)->send(new EmailPemberitahuan($data));
+        try {
+            $email = $request->session()->get('user.email');
+            Mail::to($email)->send(new EmailPemberitahuan($data));
 
-        //     return redirect('/dashboard')->with('success', 'Submission added successfully.');
-        // } catch (Exception $e) {
-        //     return 'Message could not be sent. Mailer Error: ' . $email->ErrorInfo;
-        // }
+            return redirect('/dashboard')->with('success', 'Submission added successfully.');
+        } catch (Exception $e) {
+            return 'Message could not be sent. Mailer Error: ' . $email->ErrorInfo;
+        }
         return redirect('/dashboard')->with('success', 'Submission added successfully.');
     }
 
@@ -157,33 +157,33 @@ class SubmissionController extends Controller
 
 
         if ($request->hasFile('file')) {
-            // $email = $request->session()->get('user.email');
-            // $nama = $request->session()->get('user.nama');
-            // $judul = $data['judul'];
-            // $data = [
-            //     'subject' => "[ICGT 2023] Your Submission has been Changed",
-            //     'isi' => "
-            //         Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was changed. No further action is required from you. You have already submitted your manuscript, but you can change it at any time before the deadline. You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
-            // Thank you and have a nice day.\n\nWarmest Regards
-            // Technical and Support-Staff\n
-            // ICGT-2023",
-            // ];
-            // Mail::to($email)->send(new EmailPemberitahuan($data));
-            // $request->session()->flash('success', 'Data updated successfully!');
+            $email = $request->session()->get('user.email');
+            $nama = $request->session()->get('user.nama');
+            $judul = $data['judul'];
+            $data = [
+                'subject' => "[ICGT 2023] Your Submission has been Changed",
+                'isi' => "
+                    Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was changed. No further action is required from you. You have already submitted your manuscript, but you can change it at any time before the deadline. You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
+            Thank you and have a nice day.\n\nWarmest Regards
+            Technical and Support-Staff\n
+            ICGT-2023",
+            ];
+            Mail::to($email)->send(new EmailPemberitahuan($data));
+            $request->session()->flash('success', 'Data updated successfully!');
             return redirect('/dashboard');
         } else {
-            // $email = $request->session()->get('user.email');
-            // $nama = $request->session()->get('user.nama');
-            // $judul = $data['judul'];
-            // $data = [
-            //     'subject' => "[ICGT 2023] Your Submission has been Changed",
-            //     'isi' => "
-            //         Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was changed. No further action is required from you. You have already submitted your manuscript, but you can change it at any time before the deadline. You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
-            // Thank you and have a nice day.\n\nWarmest Regards
-            // Technical and Support-Staff\n
-            // ICGT-2023",
-            // ];
-            // Mail::to($email)->send(new EmailPemberitahuan($data));
+            $email = $request->session()->get('user.email');
+            $nama = $request->session()->get('user.nama');
+            $judul = $data['judul'];
+            $data = [
+                'subject' => "[ICGT 2023] Your Submission has been Changed",
+                'isi' => "
+                    Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was changed. No further action is required from you. You have already submitted your manuscript, but you can change it at any time before the deadline. You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
+            Thank you and have a nice day.\n\nWarmest Regards
+            Technical and Support-Staff\n
+            ICGT-2023",
+            ];
+            Mail::to($email)->send(new EmailPemberitahuan($data));
             return redirect('/detail/' . $id)->with('success', 'Data updated successfully!');
         }
     }
@@ -277,19 +277,19 @@ class SubmissionController extends Controller
             ->where('id_abs_submission', $id)
             ->delete();
 
-        // $request->session()->flash('success', 'Data removed: ' . $id);
-        // $email = $request->session()->get('user.email');
-        // $nama = $request->session()->get('user.nama');
+        $request->session()->flash('success', 'Data removed: ' . $id);
+        $email = $request->session()->get('user.email');
+        $nama = $request->session()->get('user.nama');
 
-        // $data = [
-        //     'subject' => "[ICGT 2023] Your Submission has been Deleted",
-        //     'isi' => "
-        //         Dear $nama \nInformation about your paper for ICGT 2023 was Deleted. No further action is required from you. You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
-        // Thank you and have a nice day.\n\nWarmest Regards
-        // Technical and Support-Staff\n
-        // ICGT-2023",
-        // ];
-        // Mail::to($email)->send(new EmailPemberitahuan($data));
+        $data = [
+            'subject' => "[ICGT 2023] Your Submission has been Deleted",
+            'isi' => "
+                Dear $nama \nInformation about your paper for ICGT 2023 was Deleted. No further action is required from you. You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
+        Thank you and have a nice day.\n\nWarmest Regards
+        Technical and Support-Staff\n
+        ICGT-2023",
+        ];
+        Mail::to($email)->send(new EmailPemberitahuan($data));
         return redirect('/dashboard');
     }
     public function decision(Request $request, $id)
@@ -304,36 +304,36 @@ class SubmissionController extends Controller
         $submission->update();
 
 
-        //         $emailUser = User::find($submission->id_user)->email;
-        //         $nama = User::find($submission->id_user)->nama;
-        //         $judul = $submission->judul;
+        $emailUser = User::find($submission->id_user)->email;
+        $nama = User::find($submission->id_user)->nama;
+        $judul = $submission->judul;
 
-        //         if ($request->status == 2) {
+        if ($request->status == 2) {
 
 
-        //             $data = [
-        //                 'subject' => "[ICGT 2023] Your Submission has been Accepted, Please do Payment for this Submission",
-        //                 'isi' => "
-        //         Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was Accepted. All payment should be transferred to: \n\n Bank Rakyat Indonesia (BRI)\n
-        // Account Number : 1662 0100 4587 506\n
-        // Retno Novvitasari Hery Daryono.\n\n
-        // You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
-        // Thank you and have a nice day.\n\nWarmest Regards
-        // Technical and Support-Staff\n
-        // ICGT-2023",
-        //             ];
-        //             Mail::to($emailUser)->send(new EmailPemberitahuan($data));
-        //         } else if ($request->status == 3) {
-        //             $data = [
-        //                 'subject' => "[ICGT 2023] Your Submission has been Rejected",
-        //                 'isi' => "
-        //         Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was Rejected. You can check the Comment Given by Reviewers and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
-        // Thank you and have a nice day.\n\nWarmest Regards
-        // Technical and Support-Staff\n
-        // ICGT-2023",
-        //             ];
-        //             Mail::to($emailUser)->send(new EmailPemberitahuan($data));
-        //         }
+            $data = [
+                'subject' => "[ICGT 2023] Your Submission has been Accepted, Please do Payment for this Submission",
+                'isi' => "
+                Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was Accepted. All payment should be transferred to: \n\n Bank Rakyat Indonesia (BRI)\n
+        Account Number : 1662 0100 4587 506\n
+        Retno Novvitasari Hery Daryono.\n\n
+        You can see all your submissions and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
+        Thank you and have a nice day.\n\nWarmest Regards
+        Technical and Support-Staff\n
+        ICGT-2023",
+            ];
+            Mail::to($emailUser)->send(new EmailPemberitahuan($data));
+        } else if ($request->status == 3) {
+            $data = [
+                'subject' => "[ICGT 2023] Your Submission has been Rejected",
+                'isi' => "
+                Dear $nama \nInformation about your paper Entitled $judul for ICGT 2023 was Rejected. You can check the Comment Given by Reviewers and their status at https://gcms.uin-malang.ac.id/.\n From there, you can see the current status of the paper, whether a manuscript has been submitted and can edit the abstract information.\n\nRegards,
+        Thank you and have a nice day.\n\nWarmest Regards
+        Technical and Support-Staff\n
+        ICGT-2023",
+            ];
+            Mail::to($emailUser)->send(new EmailPemberitahuan($data));
+        }
 
 
 

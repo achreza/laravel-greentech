@@ -110,6 +110,14 @@
                 </tr>
                 <tr>
                     <td>
+                        <h4>Country : </h4>
+                    </td>
+                    <td>
+                        <p>{{ $submission->user->negara }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <h4>Topic :</h4>
                     </td>
                     <td>

@@ -48,17 +48,19 @@
                     <div class=" mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="customFile" name="student_card">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
+                            <label class="custom-file-label" for="customFile">Student Card</label>
                         </div>
 
                     </div>
+                    <p class="text-muted">File must be jpg / png / pdf </p>
                     <div class=" mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input v2" id="customFile" name="file">
-                            <label class="custom-file-label v22" for="customFile">Choose file</label>
+                            <label class="custom-file-label v22" for="customFile">Payment proof</label>
                         </div>
 
                     </div>
+                    <p class="text-muted">File must be jpg / png / pdf </p>
                 @else
                     <h3 class="font-weight-bold">{{ $conference }}</h3>
                     <h3>{{ $price }}</h3>
@@ -125,7 +127,7 @@
             var filePath = fileInput.value;
 
             // Allowing file type
-            var allowedExtensions = /(\.doc|\.docx)$/i;
+            var allowedExtensions = /(\.jpg|\.png|\.pdf)$/i;
 
             if (!allowedExtensions.exec(filePath)) {
                 alert("Invalid file type");

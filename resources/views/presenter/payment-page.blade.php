@@ -40,9 +40,9 @@
                 action="/payment/confirmation/{{ $submission->id_abs_submission }}" method="post">
                 @csrf
                 <div class="form-group">
-                    <label for="participantType">Participant Type:</label>
+                    <label for="participantType">Presenter Type:</label>
                     <select id="participantType" onchange="handleParticipantTypeChange()" class="form-control">
-                        <option value="">-- Select Participant Type --</option>
+                        <option value="">-- Select Presenter Type --</option>
                         <option value="online">Online</option>
                         <option value="onsite">Onsite</option>
                     </select>
@@ -50,9 +50,9 @@
 
                 <div class="form-group">
                     <div id="earlyBirdSection" style="display: none;">
-                        <label for="earlyBirdType">Type:</label>
+                        <label for="earlyBirdType">Payment Type:</label>
                         <select id="earlyBirdType" onchange="handleEarlyBirdTypeChange()" class="form-control">
-                            <option value="">-- Select Early Bird Type --</option>
+                            <option value="">-- Select Payment Type --</option>
                             <option value="earlyBird">Early Bird</option>
                             <option value="regular">Regular</option>
                         </select>
@@ -61,9 +61,9 @@
 
                 <div class="form-group">
                     <div id="onlineEarlyLocationSection" style="display: none;">
-                        <label for="onlineEarlyLocationType">Type:</label>
+                        <label for="onlineEarlyLocationType">Category :</label>
                         <select id="onlineEarlyLocationType" class="form-control" name="onlineEarly">
-                            <option value="">-- Select Location Type --</option>
+                            <option value="">-- Select Category --</option>
                             <option value="onlineEarlyLocal">Local</option>
                             <option value="onlineEarlyInternational">International</option>
 
@@ -73,9 +73,9 @@
                 </div>
                 <div class="form-group">
                     <div id="onlineRegularLocationSection" style="display: none;">
-                        <label for="onlineRegularLocationType">Type:</label>
+                        <label for="onlineRegularLocationType">Category :</label>
                         <select id="onlineRegularLocationType" class="form-control" name="onlineRegular">
-                            <option value="">-- Select Location Type --</option>
+                            <option value="">-- Select Category --</option>
                             <option value="onlineRegularLocal">Local</option>
                             <option value="onlineRegularInternational">International</option>
                         </select>
@@ -84,9 +84,9 @@
 
                 <div class="form-group">
                     <div id="onsiteEarlyLocationSection" style="display: none;">
-                        <label for="onsiteEarlyLocationType">Type:</label>
+                        <label for="onsiteEarlyLocationType">Category :</label>
                         <select id="onsiteEarlyLocationType" class="form-control" name="onsiteEarly">
-                            <option value="">-- Select Location Type --</option>
+                            <option value="">-- Select Category --</option>
                             <option value="onsiteEarlyLocal">Local</option>
                             <option value="onsiteEarlyInternational">International</option>
                             <option value="onsiteEarlyUndergraduate">Undergraduate</option>
@@ -97,9 +97,9 @@
                 </div>
                 <div class="form-group">
                     <div id="onsiteRegularLocationSection" style="display: none;">
-                        <label for="onsiteRegularLocationType">Type:</label>
+                        <label for="onsiteRegularLocationType">Category :</label>
                         <select id="onsiteRegularLocationType" class="form-control" name="onsiteRegular">
-                            <option value="">-- Select Location Type --</option>
+                            <option value="">-- Select Category --</option>
                             <option value="onsiteRegularLocal">Local</option>
                             <option value="onsiteRegularInternational">International</option>
                             <option value="onsiteRegularUndergraduate">Undergraduate</option>

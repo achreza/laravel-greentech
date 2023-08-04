@@ -379,51 +379,51 @@ class SubmissionController extends Controller
         $page = 'content';
         if ($request->onsiteEarly == 'onsiteEarlyUndergraduate') {
             $type = 'student';
-            $conference = 'Onsite Early Undergraduate';
+            $conference = 'Onsite Presenter - Early - Undergraduate';
             $price = 'IDR 500.000';
         } else if ($request->onsiteEarly == 'onsiteEarlyPostgraduate') {
             $type = 'student';
-            $conference = 'Onsite Early Postgraduate';
+            $conference = 'Onsite Presenter - Early - Postgraduate';
             $price = 'IDR 750.000';
         } else if ($request->onsiteRegular == 'onsiteRegularUndergraduate') {
             $type = 'student';
-            $conference = 'Onsite Regular Undergraduate';
+            $conference = 'Onsite Presenter - Regular - Undergraduate';
             $price = 'IDR 550.000';
         } else if ($request->onsiteEarly == 'onsiteRegularPostgraduate') {
             $type = 'student';
-            $conference = 'Onsite Regular Postgraduate';
+            $conference = 'Onsite Presenter - Regular - Postgraduate';
             $price = 'IDR 800.000';
         } else if ($request->onsiteEarly == 'onsiteEarlyLocal') {
             $type = 'Local';
-            $conference = 'Onsite Early Local';
+            $conference = 'Onsite Presenter - Early Bird - Local';
             $price = 'IDR 750.000';
         } else if ($request->onsiteEarly == 'onsiteEarlyInternational') {
             $type = 'International';
-            $conference = 'Onsite Early International';
+            $conference = 'Onsite Presenter - Early Bird - International';
             $price = 'USD 100';
         } else if ($request->onsiteRegular == 'onsiteRegularLocal') {
             $type = 'Local';
-            $conference = 'Onsite Regular Local';
+            $conference = 'Onsite Presenter - Regular - Local';
             $price = 'IDR 900.000';
         } else if ($request->onsiteRegular == 'onsiteRegularInternational') {
             $type = 'International';
-            $conference = 'Onsite Regular International';
+            $conference = 'Onsite PResenter - Regular - International';
             $price = 'USD 120';
         } else if ($request->onlineEarly == 'onlineEarlyLocal') {
             $type = 'Local';
-            $conference = 'Online Early Local';
+            $conference = 'Online Presenter - Early Bird - Local';
             $price = 'IDR 400.000';
         } else if ($request->onlineEarly == 'onlineEarlyInternational') {
             $type = 'International';
-            $conference = 'Online Early International';
+            $conference = 'Online Presenter - Early Bird - International';
             $price = 'USD 50';
         } else if ($request->onlineRegular == 'onlineRegularLocal') {
             $type = 'Local';
-            $conference = 'Online Regular Local';
+            $conference = 'Online Presenter - Regular - Local';
             $price = 'IDR 450.000';
         } else if ($request->onlineRegular == 'onlineRegularInternational') {
             $type = 'International';
-            $conference = 'Online Regular International';
+            $conference = 'Online Presenter - Regular - International';
             $price = 'USD 55';
         }
 

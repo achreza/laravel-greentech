@@ -29,7 +29,7 @@
                     <li class="nav-item">
                         <a href="/admin/participant" class="nav-link {{ $page === 'user-list' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Participant Payment</p>
+                            <p>Conference Payment</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -112,7 +112,7 @@
                     <li class="nav-item">
                         <a href="/participant/type" class="nav-link {{ $page === 'dashboard' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Payment</p>
+                            <p>Conference Payment</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -149,7 +149,7 @@
                             <li class="nav-item">
                                 <a href="/payment" class="nav-link {{ $page === 'payment' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Submission Payment</p>
+                                    <p>Conference Payment</p>
                                 </a>
                             </li>
                         </ul>

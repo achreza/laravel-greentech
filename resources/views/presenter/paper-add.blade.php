@@ -85,11 +85,15 @@
 
 
             </form>
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-lg-12">
-                    <h3 class="text-muted">
-                        Note : For the purpose of publication, options 3, 4, and 5, please proceed to the relevant journal.
-                    </h3>
+                    <h5 class="text-muted">
+                        *Note : <br>
+                        - For the purpose of publication, options 1, please proceed to the paper payment page. <br>
+                        - For the purpose of publication, options 2, please proceed to the upload paper page. <br>
+                        - For the purpose of publication, options 3, 4, and 5, please proceed to the relevant journal.
+
+                    </h5>
                 </div>
             </div>
         </div>

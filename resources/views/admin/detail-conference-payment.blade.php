@@ -103,10 +103,18 @@
             <table>
                 <tr>
                     <td>
-                        <h4>Submitter :</h4>
+                        <h4>Submitted By :</h4>
                     </td>
                     <td>
                         <p>{{ $submission->user->nama }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4>Country : </h4>
+                    </td>
+                    <td>
+                        <p>{{ $submission->user->negara }}</p>
                     </td>
                 </tr>
                 <tr>

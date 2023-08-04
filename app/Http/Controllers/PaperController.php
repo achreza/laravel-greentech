@@ -57,6 +57,9 @@ class PaperController extends Controller
         $Paper->author = $request->input('authors');
         $Paper->author_email = $request->input('authors-email');
         $Paper->publikasi = $request->input('publikasi');
+        if ($request->input('publikasi') == 2) {
+            $Paper->status_bayar = 1;
+        }
         $Paper->file_paper = $filename;
         $Paper->submitter = $submitter;
         $Paper->id_abstrak = $id;
@@ -275,11 +278,11 @@ class PaperController extends Controller
         $page = 'content';
 
         if ($request->session()->get('user.id_role_user') == 2) {
-            $data = Paper::where('submitter', $id_user)->where('publikasi', 1)->orWhere('publikasi', 2)->get();
+            $data = Paper::where('submitter', $id_user)->where('publikasi', 1)->get();
 
             return view('presenter.paper-payment', compact('page', 'data'));
         } else if ($request->session()->get('user.id_role_user') == 1) {
-            $data = Paper::where('publikasi', 1)->orWhere('publikasi', 2)->get();
+            $data = Paper::where('publikasi', 1)->get();
             return view('admin.paper-payment', compact('page', 'data'));
         }
     }

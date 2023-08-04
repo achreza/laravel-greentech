@@ -44,6 +44,7 @@ class ParticipantPaymentController extends Controller
      */
     public function store(Request $request, $option)
     {
+        $prefix = 'cp';
 
         $request->validate([
 
@@ -64,13 +65,13 @@ class ParticipantPaymentController extends Controller
         $participantPayment->jenis = $jenis;
         $participantPayment->save();
         $p2 = ParticipantPayment::where('id_participant_payment', $participantPayment->id_participant_payment)->first();
-        $filename = $this->generateFileName($file, $participantPayment->id_participant_payment);
+        $filename = $this->generateFileName($file, $prefix, $participantPayment->id_participant_payment);
         $p2->file_pembayaran = $filename;
         $p2->update();
 
 
 
-        $file->storeAs('participant-payment', $filename, 'public');
+        $file->storeAs('conference-payment', $filename, 'public');
         return redirect('/dashboard-participant')->with('success', 'Pembayaran berhasil dikirim');
     }
 
@@ -89,18 +90,19 @@ class ParticipantPaymentController extends Controller
 
     public function update(Request $request, $id)
     {
+        $prefix = 'cp';
         $request->validate([
 
             'file' => 'required|file',
         ]);
 
         $file = $request->file('file');
-        $filename = $this->generateFileName($file, $id);
+        $filename = $this->generateFileName($file, $prefix, $id);
         $participantPayment = ParticipantPayment::find($id);
         $participantPayment->file_pembayaran = $filename;
         $participantPayment->status = 0;
         $participantPayment->update();
-        $file->storeAs('participant-payment', $filename, 'public');
+        $file->storeAs('conference-payment', $filename, 'public');
         return redirect('/dashboard-participant')->with('success', 'Pembayaran berhasil dikirim');
     }
 
@@ -113,7 +115,7 @@ class ParticipantPaymentController extends Controller
     public function download($nama_file)
     {
         // Dapatkan path lengkap dari file yang akan didownload di dalam direktori storage
-        $filePath = storage_path("app/public/participant-payment/{$nama_file}");
+        $filePath = storage_path("app/public/conference-payment/{$nama_file}");
 
         // Cek apakah file ada di direktori storage
         if (!file_exists($filePath)) {
@@ -136,12 +138,11 @@ class ParticipantPaymentController extends Controller
         return response()->file($filePath, $headers);
     }
 
-    private function generateFileName($file, $id)
+    private function generateFileName($file, $prefix, $id)
     {
         $originalname = $file->getClientOriginalName();
         $fileExtension = preg_match('/\.+[\S]+$/', $originalname) ? preg_replace('/^.+(\..+)$/', '$1', $originalname) : '';
-        $fieldName = "cp";
         $timestamp = date('dmY'); // Format: DayMonthYear
-        return "{$fieldName}_{$id}_{$timestamp}" . $fileExtension;
+        return "{$prefix}_{$id}_{$timestamp}" . $fileExtension;
     }
 }

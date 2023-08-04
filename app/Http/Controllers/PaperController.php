@@ -164,21 +164,23 @@ class PaperController extends Controller
     }
     public function peerReviewAction(Request $request, $id)
     {
+        $prefix = 'pr';
         $page = 'content';
         $data = PeerReview::find($id);
 
         if ($request->session()->get('user.id_role_user') == 2) {
             $peer = new PeerReview();
             $file = $request->file('file');
-            $filename = $this->generateFileName($file, $id);
+            $filename = $this->generateFileName($file, $prefix, $id);
             $peer->id_paper = $data->id_paper;
             $peer->file_origin = $filename;
             $peer->save();
             $file->storeAs('paper-revision-presenter', $filename, 'public');
             return redirect('/dashboard')->with('success', 'Paper added successfully.');
         } else if ($request->session()->get('user.id_role_user') == 4) {
+
             $file = $request->file('file');
-            $filename = $this->generateFileName($file, $id);
+            $filename = $this->generateFileName($file, $prefix, $id);
             $data->file_revision = $filename;
             $data->comment = $request->input('comment');
             $data->update();
@@ -188,14 +190,7 @@ class PaperController extends Controller
         }
     }
 
-    private function generateFileName($file, $id)
-    {
-        $originalname = $file->getClientOriginalName();
-        $fileExtension = preg_match('/\.+[\S]+$/', $originalname) ? preg_replace('/^.+(\..+)$/', '$1', $originalname) : '';
-        $fieldName = "cp";
-        $timestamp = date('dmY'); // Format: DayMonthYear
-        return "{$fieldName}_{$id}_{$timestamp}" . $fileExtension;
-    }
+
     public function downloadPeerReviewer($nama_file)
     {
         // Dapatkan path lengkap dari file yang akan didownload di dalam direktori storage
@@ -298,11 +293,12 @@ class PaperController extends Controller
     }
     public function paperPaymentAction(Request $request, $id)
     {
+        $prefix = 'pp';
         $id_user = $request->session()->get('user.id_user');
         $page = 'content';
         $data = Paper::find($id);
         $file = $request->file('file');
-        $filename = $this->generateFileName($file, $id);
+        $filename = $this->generateFileName($file, $prefix, $id);
         $data->status_bayar = 0;
         $data->file_bayar = $filename;
         $data->update();
@@ -316,5 +312,13 @@ class PaperController extends Controller
         $data->status_bayar = $request->input('status');
         $data->update();
         return redirect('/dashboard')->with('success', 'Paper added successfully.');
+    }
+
+    private function generateFileName($file, $prefix, $id)
+    {
+        $originalname = $file->getClientOriginalName();
+        $fileExtension = preg_match('/\.+[\S]+$/', $originalname) ? preg_replace('/^.+(\..+)$/', '$1', $originalname) : '';
+        $timestamp = date('dmY'); // Format: DayMonthYear
+        return "{$prefix}_{$id}_{$timestamp}" . $fileExtension;
     }
 }

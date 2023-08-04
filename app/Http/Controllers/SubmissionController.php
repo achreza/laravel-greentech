@@ -73,6 +73,7 @@ class SubmissionController extends Controller
 
         $tanggal = now()->format('d/m/Y');
         $file = $request->file('file');
+        $prefix = 'as';
 
 
         $submission = new Submission();
@@ -85,7 +86,7 @@ class SubmissionController extends Controller
         $submission->id_status_abs = 1;
         $submission->id_user = $request->session()->get('user.id_user');
         $submission->save();
-        $filename = $this->generateFileName($file, $submission->id_abs_submission);
+        $filename = $this->generateFileName($file, $prefix, $submission->id_abs_submission);
         $submission->file_abs = $filename;
         $submission->update();
 
@@ -141,6 +142,7 @@ class SubmissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $prefix = 'as';
 
         $data = Submission::where('id_abs_submission', $id)
             ->first();
@@ -148,7 +150,7 @@ class SubmissionController extends Controller
         $data->judul = $request->input('judul');
         $data->abstrak = $request->input('abstrak');
         $file = $request->file('file');
-        $filename = $this->generateFileName($file, $id);
+        $filename = $this->generateFileName($file, $prefix, $id);
         $data->file_abs = $filename;
         $data->update();
         $file->storeAs('submission-abstract', $filename);
@@ -216,7 +218,7 @@ class SubmissionController extends Controller
     public function paymentDownload($nama_file)
     {
         // Dapatkan path lengkap dari file yang akan didownload di dalam direktori storage
-        $filePath = storage_path("app/public/abstract-payment/{$nama_file}");
+        $filePath = storage_path("app/public/conference-payment/{$nama_file}");
 
         // Cek apakah file ada di direktori storage
         if (!file_exists($filePath)) {
@@ -431,24 +433,26 @@ class SubmissionController extends Controller
     }
     public function paymentAction(Request $request, $id)
     {
+        $prefix = 'cp';
+        $prefix2 = 'sc';
 
         $idUser = $request->session()->get('user.id_user');
 
         if ($request->student_card == null) {
             $file = $request->file('file');
-            $filename = $this->generateFileName($file, $id);
+            $filename = $this->generateFileName($file, $prefix, $id);
             $conference = $request->conference;
             $submission = Submission::find($id);
             $submission->file_pembayaran = $filename;
             $submission->type_conference = $conference;
             $submission->update();
-            $file->storeAs('abstract-payment', $filename, 'public');
+            $file->storeAs('conference-payment', $filename, 'public');
         } else {
             $studentCard = $request->file('student_card');
             $studentCardName =
-                $this->generateFileName($studentCard, $id);
+                $this->generateFileName($studentCard, $prefix2, $id);
             $file = $request->file('file');
-            $filename = $this->generateFileName($file, $id);
+            $filename = $this->generateFileName($file, $prefix, $id);
             $conference = $request->conference;
             $submission = Submission::find($id);
             $submission->file_pembayaran = $filename;
@@ -458,7 +462,7 @@ class SubmissionController extends Controller
             $submission->update();
             $submitter->update();
             $studentCard->storeAs('student-card', $studentCardName, 'public');
-            $file->storeAs('abstract-payment', $filename, 'public');
+            $file->storeAs('conference-payment', $filename, 'public');
         }
 
         return redirect('/dashboard')->with('success', 'Payment added successfully.');
@@ -485,22 +489,22 @@ class SubmissionController extends Controller
         $request->validate([
             'file' => 'required|file',
         ]);
+        $prefix = 'cp';
 
         $submission = Submission::find($id);
         $file = $request->file('file');
-        $filename = $this->generateFileName($file, $id);
+        $filename = $this->generateFileName($file, $prefix, $id);
         $submission->file_pembayaran = $filename;
         $submission->update();
-        $file->storeAs('abstract-payment', $filename, 'public');
+        $file->storeAs('conference-payment', $filename, 'public');
         return redirect('/dashboard')->with('success', 'Payment reupload successfully.');
     }
 
-    private function generateFileName($file, $id)
+    private function generateFileName($file, $prefix, $id)
     {
         $originalname = $file->getClientOriginalName();
         $fileExtension = preg_match('/\.+[\S]+$/', $originalname) ? preg_replace('/^.+(\..+)$/', '$1', $originalname) : '';
-        $fieldName = "cp";
         $timestamp = date('dmY'); // Format: DayMonthYear
-        return "{$fieldName}_{$id}_{$timestamp}" . $fileExtension;
+        return "{$prefix}_{$id}_{$timestamp}" . $fileExtension;
     }
 }

@@ -98,8 +98,6 @@ class PaperController extends Controller
         $page = 'content';
         $id_abs = Submission::where('id_user', session('user.id_user'))->where('status_bayar', 1)->where('id_abs_submission', $id)->first();
 
-
-
         return view('presenter.paper-add', compact('page', 'id_abs'));
     }
 
@@ -126,11 +124,11 @@ class PaperController extends Controller
         if ($request->session()->get('user.id_role_user') == 2) {
             $page = 'content';
             $submitter = $request->session()->get('user.id_user');
-            $data = Paper::where('submitter', $submitter)->get();
+            $data = Paper::where('submitter', $submitter)->where('publikasi', 1)->orWhere('publikasi', 2)->where('status_bayar', 1)->get();
             return view('presenter.peer-review', compact('page', 'data'));
         } else {
             $page = 'content';
-            $data = Paper::all();
+            $data = Paper::where('publikasi', 1)->orWhere('publikasi', 2)->where('status_bayar', 1)->get();
             return view('reviewer.peer-review', compact('page', 'data'));
         }
     }
@@ -169,7 +167,7 @@ class PaperController extends Controller
         if ($request->session()->get('user.id_role_user') == 2) {
             $peer = new PeerReview();
             $file = $request->file('file');
-            $filename = $this->generateFileName($file);
+            $filename = $this->generateFileName($file, $id);
             $peer->id_paper = $data->id_paper;
             $peer->file_origin = $filename;
             $peer->save();
@@ -177,7 +175,7 @@ class PaperController extends Controller
             return redirect('/dashboard')->with('success', 'Paper added successfully.');
         } else if ($request->session()->get('user.id_role_user') == 4) {
             $file = $request->file('file');
-            $filename = $this->generateFileName($file);
+            $filename = $this->generateFileName($file, $id);
             $data->file_revision = $filename;
             $data->comment = $request->input('comment');
             $data->update();
@@ -187,12 +185,13 @@ class PaperController extends Controller
         }
     }
 
-    private function generateFileName($file)
+    private function generateFileName($file, $id)
     {
         $originalname = $file->getClientOriginalName();
         $fileExtension = preg_match('/\.+[\S]+$/', $originalname) ? preg_replace('/^.+(\..+)$/', '$1', $originalname) : '';
-        $fieldName = $file->getClientOriginalName();
-        return "{$fieldName}__" . time() . $fileExtension;
+        $fieldName = "cp";
+        $timestamp = date('dmY'); // Format: DayMonthYear
+        return "{$fieldName}_{$id}_{$timestamp}" . $fileExtension;
     }
     public function downloadPeerReviewer($nama_file)
     {
@@ -243,5 +242,76 @@ class PaperController extends Controller
 
         // Return response dengan file untuk di-download
         return response()->file($filePath, $headers);
+    }
+    public function downloadPaperPayment($nama_file)
+    {
+        // Dapatkan path lengkap dari file yang akan didownload di dalam direktori storage
+        $filePath = storage_path("app/public/paper-payment/{$nama_file}");
+
+        // Cek apakah file ada di direktori storage
+        if (!file_exists($filePath)) {
+            return redirect('/dashboard')->with('error', 'File not found.');
+        }
+
+        // Ambil nama file tanpa path
+        $originalName = pathinfo($filePath, PATHINFO_FILENAME);
+
+        // Dapatkan ekstensi file
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+        // Mendefinisikan headers untuk response
+        $headers = [
+            'Content-Type' => mime_content_type($filePath),
+            'Content-Disposition' => "attachment; filename=\"{$originalName}.{$extension}\"",
+        ];
+
+        // Return response dengan file untuk di-download
+        return response()->file($filePath, $headers);
+    }
+
+    public function paperPayment(Request $request)
+    {
+        $id_user = $request->session()->get('user.id_user');
+        $page = 'content';
+
+        if ($request->session()->get('user.id_role_user') == 2) {
+            $data = Paper::where('submitter', $id_user)->where('publikasi', 1)->orWhere('publikasi', 2)->get();
+
+            return view('presenter.paper-payment', compact('page', 'data'));
+        } else if ($request->session()->get('user.id_role_user') == 1) {
+            $data = Paper::where('publikasi', 1)->orWhere('publikasi', 2)->get();
+            return view('admin.paper-payment', compact('page', 'data'));
+        }
+    }
+    public function paperPaymentPage(Request $request, $id)
+    {
+        $page = 'content';
+        $data = Paper::find($id);
+        if ($request->session()->get('user.id_role_user') == 2) {
+            return view('presenter.paper-payment-page', compact('page', 'data'));
+        } else if ($request->session()->get('user.id_role_user') == 1) {
+            return view('admin.paper-payment-page', compact('page', 'data'));
+        }
+    }
+    public function paperPaymentAction(Request $request, $id)
+    {
+        $id_user = $request->session()->get('user.id_user');
+        $page = 'content';
+        $data = Paper::find($id);
+        $file = $request->file('file');
+        $filename = $this->generateFileName($file, $id);
+        $data->status_bayar = 0;
+        $data->file_bayar = $filename;
+        $data->update();
+        $file->storeAs('paper-payment', $filename, 'public');
+        return redirect('/dashboard')->with('success', 'Paper added successfully.');
+    }
+
+    public function paperPaymentAdmin(Request $request, $id)
+    {
+        $data = Paper::find($id);
+        $data->status_bayar = $request->input('status');
+        $data->update();
+        return redirect('/dashboard')->with('success', 'Paper added successfully.');
     }
 }

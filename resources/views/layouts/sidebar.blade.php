@@ -32,6 +32,12 @@
                             <p>Participant Payment</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/admin/paper/payment" class="nav-link {{ $page === 'user-list' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Paper Payment</p>
+                        </a>
+                    </li>
                     <li class="nav-item menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -123,29 +129,61 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/submission" class="nav-link {{ $page === 'submission' ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>New Abstract Submission</p>
+
+                    <li class="nav-item menu-open">
+                        <a href="#" class="nav-link active">
+
+                            <p>
+                                Abstract's Submission
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
                         </a>
+
+                        <ul class="nav nav-treeview" style="margin-left: 20px">
+                            <li class="nav-item">
+                                <a href="/submission" class="nav-link {{ $page === 'submission' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>New Abstract Submission</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/payment" class="nav-link {{ $page === 'payment' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Submission Payment</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="/payment" class="nav-link {{ $page === 'payment' ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Submission Payment</p>
+                    <li class="nav-item menu-open">
+                        <a href="#" class="nav-link active">
+
+                            <p>
+                                Paper's Submission
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/paper" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Paper Submission</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/peer-review" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Peer Review</p>
-                        </a>
+
+                        <ul class="nav nav-treeview" style="margin-left: 20px">
+                            <li class="nav-item">
+                                <a href="/paper" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Paper Submission</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/paper-payment" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Paper Payment</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="/peer-review" class="nav-link {{ $page === 'paper' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Peer Review</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="/profile" class="nav-link {{ $page === 'profile' ? 'active' : '' }}">

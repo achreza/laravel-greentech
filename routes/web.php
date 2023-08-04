@@ -59,7 +59,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/user-list/add', [UserController::class, 'store']);
         Route::get('/admin/user-list/remove/{id}', [UserController::class, 'destroy']);
 
-        Route::get('/admin/detail/{id}', [DashboardController::class, 'detail'])->name('detail-admin');
+        Route::get('/admin/detail/{id}', [DashboardController::class, 'detail']);
+        Route::get('/admin/edit/{id}', [DashboardController::class, 'editAdmin'])->name('detail-admin');
         Route::get('/admin/detail/download/{file_name}', [SubmissionController::class, 'download'])->name('admin-download-file');
         Route::post('/admin/detail/edit/{id}', [DashboardController::class, 'paymentConfirm'])->name('payment-confirm');
 
@@ -75,6 +76,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/participant/{id}', [DashboardController::class, 'participantDetail'])->name('admin-participant-detail');
         Route::post('/admin/participant/decision/{id}', [DashboardController::class, 'participantDecision'])->name('admin-participant-decision');
         Route::get('/admin/participant/download/{nama_file}', [ParticipantPaymentController::class, 'download'])->name('download-participant');
+
+        Route::get('/admin/paper/payment', [PaperController::class, 'paperPayment']);
+        Route::get('/admin/paper/payment/{id}', [PaperController::class, 'paperPaymentPage']);
+        Route::post('/admin/paper/payment/post/{id}', [PaperController::class, 'paperPaymentAdmin']);
+
+
 
 
 
@@ -129,6 +136,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/peer-review/{id}', [PaperController::class, 'peerReviewDetail'])->name('paper-peer-review-detail');
         Route::get('/peer-review/edit/{id}', [PaperController::class, 'peerReviewEdit'])->name('paper-peer-review-edit');
         Route::post('/peer-review/post/{id}', [PaperController::class, 'peerReviewAction'])->name('paper-peer-review-action');
+
+        Route::get('/paper-payment', [PaperController::class, 'paperPayment']);
+        Route::get('/paper/payment/{id}', [PaperController::class, 'paperPaymentPage'])->name('paper-payment-page');
+        Route::get('/paper-payment/download/{nama_file}', [PaperController::class, 'downloadPaperPayment']);
+        Route::post('/paper/payment/post/{id}', [PaperController::class, 'paperPaymentAction'])->name('paper-payment-action');
     });
 
     Route::group(['middleware' => 'participant'], function () {
@@ -145,6 +157,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/participant/payment/post/{option}', [ParticipantPaymentController::class, 'store'])->name('participant-payment-post');
 
         Route::post('/participant/reupload/post/{id}', [ParticipantPaymentController::class, 'update'])->name('participant-reupload-post');
+
+        Route::get('/participant/download/{nama_file}', [ParticipantPaymentController::class, 'download'])->name('participant-download');
     });
     Route::get('/download/paper-reviewer/{file_name}', [PaperController::class, 'downloadPeerReviewer'])->name('download-file-peer-reviewer');
     Route::get('/download/paper-presenter/{file_name}', [PaperController::class, 'downloadPeerPresenter'])->name('download-file-peer-presenter');

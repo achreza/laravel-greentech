@@ -139,6 +139,9 @@
                                         </td>
                                         @if (request()->session()->get('user.id_role_user') == 1)
                                             <td>
+                                                <a class="btn btn-warning"
+                                                    href="/admin/edit/{{ $item->id_abs_submission }}">Edit</a>
+                                                <span> | </span>
                                                 <a class="btn btn-primary"
                                                     href="/admin/detail/{{ $item->id_abs_submission }}">Detail</a>
                                                 <span> | </span>

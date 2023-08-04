@@ -25,6 +25,7 @@
                                 <th>Type</th>
                                 <th>Date Upload</th>
                                 <th>Status</th>
+                                <th>File</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -52,10 +53,18 @@
                                                 <span class="badge badge-warning">Waiting for Confirmation</span>
                                             @endif
                                         </td>
+                                        <td>
+                                            <a href="/participant/payment/download/{{ $item->file_pembayaran }}"
+                                                class="btn btn-primary">{{ $item->file_pembayaran }}</a>
+                                        </td>
 
                                         <td>
-                                            <a class="btn btn-primary"
-                                                href="/participant/reupload/{{ $item->id_participant_payment }}">Reupload</a>
+
+                                            <a href="/participant/reupload/{{ $item->id_participant_payment }}"><button
+                                                    class="btn btn-primary"
+                                                    @if ($item->status == 1) disabled @endif>Reupload</button></a>
+
+
                                         </td>
 
 

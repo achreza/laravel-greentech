@@ -56,13 +56,19 @@ class ParticipantPaymentController extends Controller
         }
         $id_user = $request->session()->get('user.id_user');
         $file = $request->file('file');
-        $filename = $this->generateFileName($file);
+
         $participantPayment = new ParticipantPayment();
         $participantPayment->id_participant = $id_user;
-        $participantPayment->file_pembayaran = $filename;
+        $participantPayment->file_pembayaran = "-";
         $participantPayment->status = 0;
         $participantPayment->jenis = $jenis;
         $participantPayment->save();
+        $p2 = ParticipantPayment::where('id_participant_payment', $participantPayment->id_participant_payment)->first();
+        $filename = $this->generateFileName($file, $participantPayment->id_participant_payment);
+        $p2->file_pembayaran = $filename;
+        $p2->update();
+
+
 
         $file->storeAs('participant-payment', $filename, 'public');
         return redirect('/dashboard-participant')->with('success', 'Pembayaran berhasil dikirim');
@@ -89,7 +95,7 @@ class ParticipantPaymentController extends Controller
         ]);
 
         $file = $request->file('file');
-        $filename = $this->generateFileName($file);
+        $filename = $this->generateFileName($file, $id);
         $participantPayment = ParticipantPayment::find($id);
         $participantPayment->file_pembayaran = $filename;
         $participantPayment->status = 0;
@@ -130,11 +136,12 @@ class ParticipantPaymentController extends Controller
         return response()->file($filePath, $headers);
     }
 
-    private function generateFileName($file)
+    private function generateFileName($file, $id)
     {
         $originalname = $file->getClientOriginalName();
         $fileExtension = preg_match('/\.+[\S]+$/', $originalname) ? preg_replace('/^.+(\..+)$/', '$1', $originalname) : '';
-        $fieldName = $file->getClientOriginalName();
-        return "{$fieldName}__" . time() . $fileExtension;
+        $fieldName = "cp";
+        $timestamp = date('dmY'); // Format: DayMonthYear
+        return "{$fieldName}_{$id}_{$timestamp}" . $fileExtension;
     }
 }

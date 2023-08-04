@@ -100,6 +100,20 @@ class DashboardController extends Controller
             return view('reviewer.detail', compact('submission', 'page'));
         }
     }
+    public function editAdmin($id)
+    {
+        $submission = Submission::find($id);
+        if ($submission->decission_by != null) {
+            $reviewer = User::find($submission->decission_by);
+        } else {
+            $reviewer = null;
+        }
+
+        $page = 'content';
+
+
+        return view('admin.edit-conference-payment', compact('submission', 'page', 'reviewer'));
+    }
 
     public function reviewerEdit($id)
     {

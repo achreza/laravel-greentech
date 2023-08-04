@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Abstract</label>
-                    <textarea class="form-control" id="w3review" name="abstrak" rows="6" cols="50" style="resize: none"
+                    <textarea class="form-control" id="w3review" name="abstrak" rows="10" cols="50" style="resize: none"
                         @if ($data->id_status_abs == 2 || $data->id_status_abs == 3) disabled @endif> {{ $data->abstrak }}</textarea>
 
                 </div>
@@ -48,45 +48,67 @@
                 </div>
 
 
-                <span class="m-1 mb-1">Reupload Submission:</span>
-                <div class="input-group mb-3 mt-1">
-                    <div class="custom-file" @if ($data->id_status_abs == 2 || $data->id_status_abs == 3) hidden @endif>
-                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="file" />
-                        <label class="custom-file-label" for="inputGroupFile02"
-                            aria-describedby="inputGroupFileAddon02">Choose
-                            file</label>
+                <span class="m-1 mb-1">Reupload Submission:</span @if ($data->id_status_abs == 2 || $data->id_status_abs == 3)
+                hidden
+                @endif>
+                <div class=" mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" name="file"
+                            onchange="return fileValidation()">
+                        <label class="custom-file-label" for="customFile">File Revision</label>
                     </div>
+
                 </div>
 
-                <h5>Upload Time : {{ $data->submitted_at }}
+                <h5 style=" margin: 0;
+            font-size: 18px;
+            font-weight: bold;">Upload Time :
+                    {{ $data->submitted_at }}
                 </h5>
-                <h5>Status : {{ $data->status->status }}
+                <h5 style=" margin: 0;
+            font-size: 18px;
+            font-weight: bold;">Status :
+                    {{ $data->status->status }}
                 </h5>
 
-                <h5>Decision Time : @if ($data->decission_at)
-                        {{ $data->decision_at }}
+
+
+                <div class="btn-section mt-4">
+                    @if ($data->id_status_abs == 1)
+                        <button type="submit" class="btn btn-primary "
+                            onClick="return confirm('Anda yakin ingin mengubah?')">Edit
+                            my
+                            Submission</button>
                     @else
-                        -
+                        <button class="btn btn-danger" disabled>Your Abstract has been Reviewed</button>
                     @endif
-                </h5>
-
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Comment</label>
-                    <textarea class="form-control" id="w3review" name="comment" rows="6" cols="50" style="resize: none"
-                        readonly>{{ $data->comment }}</textarea>
-
                 </div>
-                @if ($data->id_status_abs == 1)
-                    <button type="submit" class="btn btn-primary "
-                        onClick="return confirm('Anda yakin ingin mengubah?')">Edit
-                        my
-                        Submission</button>
-                @else
-                    <button class="btn btn-danger" disabled>Your Abstract has been Reviewed</button>
-                @endif
+
 
             </form>
         </div>
 
     </div>
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        function fileValidation() {
+            var fileInput = document.getElementById("file-upload");
+
+            var filePath = fileInput.value;
+
+            // Allowing file type
+            var allowedExtensions = /(\.jpg|\.png|\.pdf)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                alert("Invalid file type");
+                fileInput.value = "";
+                return false;
+            }
+        }
+    </script>
 @endsection

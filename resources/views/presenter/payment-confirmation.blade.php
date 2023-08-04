@@ -40,8 +40,8 @@
                 method="post">
                 @csrf
                 @if ($type == 'student')
-                    <h1>{{ $type }}</h1>
-                    <h1>{{ $price }}</h1>
+                    <h3 class="font-weight-bold">{{ $conference }}</h3>
+                    <h3>{{ $price }}</h3>
 
                     <input type="text" value="{{ $conference }}" name="conference" hidden>
 
@@ -60,8 +60,8 @@
 
                     </div>
                 @else
-                    <h1>{{ $type }}</h1>
-                    <h1>{{ $price }}</h1>
+                    <h3 class="font-weight-bold">{{ $conference }}</h3>
+                    <h3>{{ $price }}</h3>
 
                     <input type="text" value="{{ $conference }}" name="conference" hidden>
 
@@ -75,6 +75,7 @@
                     </div>
                     <div id="file-upload-filename" class="mt-3 mb-3" style="display: block"><span id="status"></span>
                     </div>
+                    <p class="text-muted">File must be jpg / png / pdf </p>
                 @endif
 
 
@@ -139,7 +140,7 @@
             var filePath = fileInput.value;
 
             // Allowing file type
-            var allowedExtensions = /(\.jpg|\.png)$/i;
+            var allowedExtensions = /(\.jpg|\.png|\.pdf)$/i;
 
             if (!allowedExtensions.exec(filePath)) {
                 alert("Invalid file type");

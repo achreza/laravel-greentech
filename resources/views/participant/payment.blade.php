@@ -47,6 +47,7 @@
                         </div>
                         <div id="file-upload-filename" class="mt-3 mb-3" style="display: block"><span id="status"></span>
                         </div>
+                        <p class="text-muted">*Format file must be jpg / png / pdf </p>
                         <button type="submit" class="btn btn-primary">Next</button>
                     </form>
                 </div>
@@ -76,7 +77,7 @@
             var filePath = fileInput.value;
 
             // Allowing file type
-            var allowedExtensions = /(\.doc|\.docx)$/i;
+            var allowedExtensions = /(\.jpg|\.png|\.pdf)$/i;
 
             if (!allowedExtensions.exec(filePath)) {
                 alert("Invalid file type");
